@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class PourDetector : MonoBehaviour
 
     private void Update(){
         print(CalculatePourAngle());
-        bool pourCheck = CalculatePourAngle() > pourThreshold;
+        bool pourCheck = Math.Abs(CalculatePourAngle()) > pourThreshold;
         if (isPouring != pourCheck){
             isPouring = pourCheck;
             if (isPouring){
@@ -46,8 +47,11 @@ public class PourDetector : MonoBehaviour
 
     }
 
-    private float CalculatePourAngle(){
-        return transform.forward.y * Mathf.Rad2Deg;
+    private float CalculatePourAngle()
+    {
+        var xAngle = Math.Abs(transform.rotation.x * Mathf.Rad2Deg);
+        var yAngle = Math.Abs(transform.rotation.z * Mathf.Rad2Deg);
+        return Math.Max(xAngle, yAngle);
     }
 
 }
