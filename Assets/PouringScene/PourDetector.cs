@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PourDetector : MonoBehaviour
 {
-    public int pourThreshold = 30;
+    public int pourThreshold = 90;
     public GameObject streamPrefab = null;
 
     private bool isPouring = false;
 
     private void Update(){
-        print(CalculatePourAngle());
         bool pourCheck = CalculatePourAngle() > pourThreshold;
         if (isPouring != pourCheck){
             isPouring = pourCheck;
@@ -47,7 +46,8 @@ public class PourDetector : MonoBehaviour
     }
 
     private float CalculatePourAngle(){
-        return transform.forward.y * Mathf.Rad2Deg;
+        float angle = Vector3.Angle(transform.up, Vector3.up);
+        return angle;
     }
 
 }
