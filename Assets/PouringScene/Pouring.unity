@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -983,11 +983,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7113350364465979179, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: -11.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114009604758757805, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7114009604758757807, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
       propertyPath: m_Name
       value: Bottle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114009607105009282, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7127001291109640597, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -996,6 +1004,6 @@ PrefabInstance:
     - target: {fileID: 7146233963753515589, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
       propertyPath: liqMat
       value: 
-      objectReference: {fileID: 539763383}
+      objectReference: {fileID: 1404407393}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8965fb48097d88b4eae2d00b0ab768c9, type: 3}
