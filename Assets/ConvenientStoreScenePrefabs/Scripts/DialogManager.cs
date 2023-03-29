@@ -9,11 +9,13 @@ public class DialogManager : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public GameObject LeftButton;
     public GameObject RightButton;
-    // private Queue<string> sentences;
+    public GameObject checkoutArea;
     private List<string> sentencesList = new List<string>();
     private int currentSentence = -1;
     // Start is called before the first frame update
     private bool inProgress = false;
+
+
     void Start()
     {
         // sentences = new Queue<string>();
@@ -24,11 +26,6 @@ public class DialogManager : MonoBehaviour
         sentencesList.Add("Thank you for shopping at our store!");
         Debug.Log("sentencesList.Count: " + sentencesList.Count);
 
-        // sentences.Enqueue("Good Morning! How may I help you?");
-        // sentences.Enqueue("Do you need a plastic bag? It's 10 cents.");
-        // sentences.Enqueue("The total is $10.50. Pay with cash or card?");
-        // sentences.Enqueue("Thank you for shopping at our store!");
-        // Debug.Log("sentences.Count: " + sentences.Count);
     }
 
     public void goToNext(){
@@ -49,9 +46,16 @@ public class DialogManager : MonoBehaviour
         {
             // Disable the dialog box
             this.gameObject.SetActive(false);
-            currentSentence = -1;
+            // currentSentence = -1;
             return;
         }
+        string sentence = sentencesList[currentSentence];
+        StartCoroutine(TypeSentence(sentence));
+    }
+
+    public void DisplayCurrentSentence()
+    {
+        // string sentence = sentences.Dequeue();
         string sentence = sentencesList[currentSentence];
         StartCoroutine(TypeSentence(sentence));
     }
@@ -84,12 +88,11 @@ public class DialogManager : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             // Check if the index is -1
-            if (currentSentence == -1)
+            if (currentSentence == -1 && !inProgress)
             {
-                // Set the index to 0
-                currentSentence = 0;
                 // Display the first sentence
-                DisplayNextSentence();
+                inProgress = true;
+                // DisplayNextSentence();
             }
             // Check if the index is 0
             if (currentSentence == 0)
@@ -98,15 +101,48 @@ public class DialogManager : MonoBehaviour
                 LeftButton.SetActive(false);
                 RightButton.SetActive(true);
             }
-            // Check if the index is the last sentence
+            else if (currentSentence == sentencesList.Count - 1)
+            {
+                // Disable the right button
+                LeftButton.SetActive(false);
+                RightButton.SetActive(false);
+            }
             else
             {
+                if (currentSentence >= 1 && !inProgress){
+                    checkoutArea.GetComponent<CheckoutAreaManager>().placeBasket();
+                }
+                if (currentSentence >= 2 && !inProgress){
+                    checkoutArea.GetComponent<CheckoutAreaManager>().clearItemsInBasket();
+                } 
+                if (currentSentence >= 3 && !inProgress){
+                    checkoutArea.GetComponent<CheckoutAreaManager>().removeBasket();
+                }
                 LeftButton.SetActive(true);
             }
             
-        }else{
-            Debug.Log("DialogManager is not active");
         }
+    }
+
+    public void pickUpBasket()
+    {
+        checkoutArea.GetComponent<CheckoutAreaManager>().pickUpBasket();
+    }
+
+    public bool checkIfComplete()
+    {
+        if (currentSentence == sentencesList.Count - 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Reset() {
+        inProgress = false;
     }
 
 }

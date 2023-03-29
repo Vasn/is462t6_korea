@@ -9,6 +9,7 @@ public class CashierInteractable : MonoBehaviour
     public GameObject CashierDialogue;
     public GameObject Cashier;
     protected Animator CashierAnimator;
+    private bool started = false;
 
     [SerializeField]
     private RuntimeAnimatorController CashierIdle;
@@ -31,6 +32,15 @@ public class CashierInteractable : MonoBehaviour
         {
             CashierDialogue.SetActive(true);
             CashierAnimator.runtimeAnimatorController = CashierTalk as RuntimeAnimatorController;
+            if (!started)
+            {
+                CashierDialogue.GetComponent<DialogManager>().DisplayNextSentence();
+                started = true;
+            }
+            else
+            {
+                CashierDialogue.GetComponent<DialogManager>().DisplayCurrentSentence();
+            }
         }
     }
 
@@ -38,6 +48,11 @@ public class CashierInteractable : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            if (!CashierDialogue.GetComponent<DialogManager>().checkIfComplete())
+            {
+                CashierDialogue.GetComponent<DialogManager>().pickUpBasket();
+            }
+            // CashierDialogue.GetComponent<DialogManager>().Reset();
             CashierDialogue.SetActive(false);
             CashierAnimator.runtimeAnimatorController = CashierIdle as RuntimeAnimatorController;
             
