@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: de766ba09ec47ab41b4c090fbc0544fd
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F44336
+    second: {fileID: 2100000, guid: be43192fc059d174e8c5a5b82178a8fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FFCC88
+    second: {fileID: 2100000, guid: 87f1895b0c77ef3489f628749d05421f, type: 2}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: cc45016b844e7624dae3aec10fb443ea, type: 3}
+  reverseAxis: 0
+  renderPipeline: 0
