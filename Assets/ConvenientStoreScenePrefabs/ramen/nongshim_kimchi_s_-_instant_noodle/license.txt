@@ -1,0 +1,11 @@
+Model Information:
+* title:	Nongshim Kimchi (S) - Instant Noodle
+* source:	https://sketchfab.com/3d-models/nongshim-kimchi-s-instant-noodle-2a36a8b83c1c4eaa885c2f7bc497840b
+* author:	Mr. Mushi (https://sketchfab.com/mr.mushi)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Nongshim Kimchi (S) - Instant Noodle" (https://sketchfab.com/3d-models/nongshim-kimchi-s-instant-noodle-2a36a8b83c1c4eaa885c2f7bc497840b) by Mr. Mushi (https://sketchfab.com/mr.mushi) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
