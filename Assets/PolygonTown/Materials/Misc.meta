@@ -1,8 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: ae26228989c9a442a9d3fdf8dadfcdc7
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
+=======
+guid: 1c159fc20b648844391af4711c6fdcb4
+folderAsset: yes
+timeCreated: 1532576584
+licenseType: Store
+DefaultImporter:
+>>>>>>> dd9221b (Yuki Local Commits)
   userData: 
   assetBundleName: 
   assetBundleVariant: 
