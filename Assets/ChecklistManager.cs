@@ -13,6 +13,11 @@ public class ChecklistManager : MonoBehaviour
 
     private string tobuy;
     private string bought;
+
+    public Transform ramenTransform;
+    public Transform sojuTransform;
+    public Transform toothpasteTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,33 +33,44 @@ public class ChecklistManager : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        // make the object a child of the collided object, set rotation to 0 and physics to stop
+        // make the object a child of the collided object, set rotation to 0 and go to each tag's position. disable rigidbody and collider
         
-        if (collision.gameObject.tag == "Ramen")
+        if (other.gameObject.tag == "Ramen")
         {
-            ramen = true;
-            collision.gameObject.transform.SetParent(this.transform);
-            collision.gameObject.transform.rotation = Quaternion.identity;
-            collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            collision.gameObject.GetComponent<Collider>().enabled = false;
+            if(!ramen){
+                ramen = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = ramenTransform.position;
+                // destroy rigidbody and collider
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
+            
         }
-        if (collision.gameObject.tag == "Soju")
+        if (other.gameObject.tag == "Soju")
         {
-            soju = true;
-            collision.gameObject.transform.SetParent(this.transform);
-            collision.gameObject.transform.rotation = Quaternion.identity;
-            collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            collision.gameObject.GetComponent<Collider>().enabled = false;
+            if(!soju){
+                soju = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = sojuTransform.position;
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
         }
-        if (collision.gameObject.tag == "Toothpaste")
+        if (other.gameObject.tag == "Toothpaste")
         {
-            toothpaste = true;
-            collision.gameObject.transform.SetParent(this.transform);
-            collision.gameObject.transform.rotation = Quaternion.identity;
-            collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            collision.gameObject.GetComponent<Collider>().enabled = false;
+            if(!toothpaste){
+                ramen = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = toothpasteTransform.position;
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
         }
 
         Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Toothpaste: " + toothpaste);
