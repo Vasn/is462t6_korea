@@ -13,6 +13,11 @@ public class ChecklistManager : MonoBehaviour
 
     private string tobuy;
     private string bought;
+
+    public Transform ramenTransform;
+    public Transform sojuTransform;
+    public Transform toothpasteTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,24 +33,48 @@ public class ChecklistManager : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Ramen")
+        // make the object a child of the collided object, set rotation to 0 and go to each tag's position. disable rigidbody and collider
+        
+        if (other.gameObject.tag == "Ramen")
         {
-            ramen = true;
+            if(!ramen){
+                ramen = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = ramenTransform.position;
+                // destroy rigidbody and collider
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
+            
         }
-        if (collision.gameObject.tag == "Soju")
+        if (other.gameObject.tag == "Soju")
         {
-            soju = true;
+            if(!soju){
+                soju = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = sojuTransform.position;
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
         }
-        if (collision.gameObject.tag == "Toothpaste")
+        if (other.gameObject.tag == "Toothpaste")
         {
-            toothpaste = true;
+            if(!toothpaste){
+                ramen = true;
+                other.gameObject.transform.SetParent(this.transform);
+                other.gameObject.transform.rotation = Quaternion.identity;
+                other.gameObject.transform.position = toothpasteTransform.position;
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.gameObject.GetComponent<Collider>().enabled = false;
+            }
         }
 
-        Destroy(collision.gameObject);
-        //Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Toothpaste: " + toothpaste);
-    // build the chceklist strings
+        Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Toothpaste: " + toothpaste);
+        //  build the chceklist strings
         tobuy = "To buy: \n";
         bought = "\nBought: \n";
         if (soju == true)
@@ -77,5 +106,59 @@ public class ChecklistManager : MonoBehaviour
 
         string compiled = tobuy +"\n"+ bought;
         checklistText.text = compiled.Replace("\n", Environment.NewLine);
+
+        Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Toothpaste: " + toothpaste);
+       
+        
+    }
+
+    public void update_me(GameObject grabbable)
+    {
+        if (grabbable.tag == "Ramen")
+        {
+            ramen = true;
+        }
+        if (grabbable.tag == "Soju")
+        {
+            soju = true;
+        }
+        if (grabbable.tag == "Toothpaste")
+        {
+            toothpaste = true;
+        }
+
+        tobuy = "To buy: \n";
+        bought = "\nBought: \n";
+        if (soju == true)
+        {
+            bought += "1. Soju \n";
+        }
+        else
+        {
+            tobuy += "1. Soju \n";
+        }
+
+        if (ramen == true)
+        {
+            bought += "2. Instant Ramen \n";
+        }
+        else
+        {
+            tobuy += "2. Instant Ramen \n";
+        }
+
+        if (toothpaste == true)
+        {
+            bought += "3. Toothpaste \n";
+        }
+        else
+        {
+            tobuy += "3. Toothpaste \n";
+        }
+
+        string compiled = tobuy +"\n"+ bought;
+        checklistText.text = compiled.Replace("\n", Environment.NewLine);
+
+        Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Toothpaste: " + toothpaste);
     }
 }
