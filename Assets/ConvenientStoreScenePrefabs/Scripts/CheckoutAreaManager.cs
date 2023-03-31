@@ -8,6 +8,7 @@ public class CheckoutAreaManager : MonoBehaviour
     public GameObject checklist;
     private bool basketDown = false;
     private GameObject newBasket;
+    public GameObject plasticBag;
     
     public void placeBasket()
     {
@@ -77,5 +78,57 @@ public class CheckoutAreaManager : MonoBehaviour
             clearItemsInBasket();
             removeBasket();
         }        
+    }
+
+    public void spawnItems()
+    {
+        // Get all items in the basket and spawn them in checkout area
+        foreach (Transform child in newBasket.transform)
+        {
+            if (child.gameObject.tag == "Basket")
+            {
+                continue;
+            }
+            // Get the position of the basket
+            Vector3 basketPosition = newBasket.transform.position;
+            // Get the position of the item
+            Vector3 itemPosition = child.transform.position;
+            // Get the difference between the two positions
+            Vector3 difference = itemPosition - basketPosition;
+            // Get the position of the item in the world
+            Vector3 worldPosition = basketPosition + difference;
+            // Spawn the item in the world
+            Instantiate(child.gameObject, worldPosition, Quaternion.identity);
+        }
+        //Destroy the basket
+        removeBasket();
+    }
+
+    public void spawnPlasticBag()
+    {
+        // unhide the plastic bag
+        plasticBag.SetActive(true);
+
+        // Put Items from basket into plastic bag
+        foreach (Transform child in newBasket.transform)
+        {
+            if (child.gameObject.tag == "Basket")
+            {
+                continue;
+            }
+            // Get the position of the plastic bag
+            Vector3 plasticPosition = plasticBag.transform.position;
+            // Get the position of the item
+            Vector3 itemPosition = child.transform.position;
+            // Get the difference between the two positions
+            Vector3 difference = itemPosition - plasticPosition;
+            // Get the position of the item in the world
+            Vector3 worldPosition = plasticPosition + difference;
+            // Spawn the item in the world
+            Instantiate(child.gameObject, worldPosition, Quaternion.identity);
+        }
+
+        // Destroy the basket
+        removeBasket();
     }
 }
