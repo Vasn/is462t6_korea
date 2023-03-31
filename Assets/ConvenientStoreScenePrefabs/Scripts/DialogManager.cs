@@ -11,6 +11,8 @@ public class DialogManager : MonoBehaviour
     public GameObject RightButton;
     public GameObject checkoutArea;
     private List<string> sentencesList = new List<string>();
+    private List<string> leftOptionsList = new List<string>();
+    private List<string> rightOptionsList = new List<string>();
     private int currentSentence = -1;
     // Start is called before the first frame update
     private bool inProgress = false;
@@ -20,22 +22,37 @@ public class DialogManager : MonoBehaviour
     {
         // sentences = new Queue<string>();
         // Add sentences to the list
-        sentencesList.Add("Good Morning! How may I help you?");
-        sentencesList.Add("Do you need a plastic bag? It's 10 cents.");
-        sentencesList.Add("The total is $10.50. Pay with cash or card?");
-        sentencesList.Add("Thank you for shopping at our store!");
-        Debug.Log("sentencesList.Count: " + sentencesList.Count);
+        sentencesList.Add("안녕하세요, 무엇을 도와 드릴까요? Hello! How may I help you?");
+        sentencesList.Add("비닐봉지가 필요하세요? 100원입니다! Do you need a plastic bag, it will be 100won!");
+        sentencesList.Add("9900원 입니다 현금으로 하세요 카드로 하세요? That will be 9900won Pay by Cash or Card?");
+        sentencesList.Add("우리와 함께 쇼핑해 주셔서 감사합니다! 좋은 하루 되세요! Thank you for shopping with us! Have a nice day!");
+        
+        // Add left options to the list
+        leftOptionsList.Add("");
+        leftOptionsList.Add("네 Yes");
+        leftOptionsList.Add("");
+        leftOptionsList.Add("");
 
+        // Add right options to the list
+        rightOptionsList.Add("Next");
+        rightOptionsList.Add("아니요 No");
+        rightOptionsList.Add("카드 Card");
+        rightOptionsList.Add("");
+        
+        Debug.Log("sentencesList.Count: " + sentencesList.Count);
     }
 
     public void goToNext(){
         Debug.Log("goToNext");
+        // Insert checks update the options accordingly
         DisplayNextSentence();
+        renderOptions();
     }
 
     public void goToPrevious(){
         Debug.Log("goToPrevious");
         DisplayPreviousSentence();
+        renderOptions();
     }
 
     public void DisplayNextSentence()
@@ -143,6 +160,65 @@ public class DialogManager : MonoBehaviour
 
     public void Reset() {
         inProgress = false;
+    }
+
+    void renderOptions()
+    {
+        string leftOption = leftOptionsList[currentSentence];
+        string rightOption = rightOptionsList[currentSentence];
+
+        //If currentsentence is 1, change Left Button's action to recyclableBag
+        if (currentSentence == 1)
+        {
+            LeftButton.GetComponent<UIButtonClick>().ChangeAction("noBag");
+            RightButton.GetComponent<UIButtonClick>().ChangeAction("yesBag");
+        }
+        else
+        {
+            LeftButton.GetComponent<UIButtonClick>().ChangeAction("previous");
+            RightButton.GetComponent<UIButtonClick>().ChangeAction("next");
+        }
+
+        if (leftOption == "")
+        {
+            // Disable the left button
+            LeftButton.SetActive(false);
+        }
+        else
+        {
+            // Enable the left button
+            LeftButton.SetActive(true);
+            // Render the left option
+            LeftButton.GetComponent<UIButtonClick>().ChangeText(leftOption);
+        }
+        if (rightOption == "")
+        {
+            // Disable the right button
+            RightButton.SetActive(false);
+        }
+        else
+        {
+            // Enable the right button
+            RightButton.SetActive(true);
+            // Render the right option
+            RightButton.GetComponent<UIButtonClick>().ChangeText(rightOption);
+        }
+    }
+
+    public void noBag()
+    {
+        // Spawn the Recyclable Bag
+        checkoutArea.GetComponent<CheckoutAreaManager>().spawnItems();
+        // go to next sentence
+        goToNext();
+    }
+
+    public void yesBag()
+    {
+        // Spawn the Plastic Bag
+        checkoutArea.GetComponent<CheckoutAreaManager>().spawnPlasticBag();
+        // go to next sentence
+        goToNext();
     }
 
 }
