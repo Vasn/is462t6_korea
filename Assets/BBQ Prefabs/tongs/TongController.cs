@@ -6,6 +6,7 @@ public class TongController : MonoBehaviour
 {
     public GameObject TongLeft;
     public GameObject TongRight;
+    public GameObject SnapPoint;
     public bool isClosed = false;
     
     // Start is called before the first frame update
@@ -17,8 +18,14 @@ public class TongController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // print out the item the object is colliding with based on box collider
+
+
+
         
     }
+
 
 
     public void CloseTong()
@@ -28,6 +35,12 @@ public class TongController : MonoBehaviour
             TongLeft.GetComponent<Animation>().Play("TongLeftClose");
             TongRight.GetComponent<Animation>().Play("TongRightClose");
             print("Tong Closed");
+            
+            
+
+
+
+
             isClosed = true;
         }
     }
