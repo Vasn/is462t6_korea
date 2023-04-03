@@ -6,6 +6,7 @@ public class TongController : MonoBehaviour
 {
     public GameObject TongLeft;
     public GameObject TongRight;
+    public bool isClosed = false;
     
     // Start is called before the first frame update
     void Start()
@@ -19,21 +20,26 @@ public class TongController : MonoBehaviour
         
     }
 
+
     public void CloseTong()
     {
         // Play animation of TongLeft
-        TongLeft.GetComponent<Animation>().Play("TongLeftClose");
-        TongRight.GetComponent<Animation>().Play("TongRightClose");
-        
+        if (isClosed == false) {
+            TongLeft.GetComponent<Animation>().Play("TongLeftClose");
+            TongRight.GetComponent<Animation>().Play("TongRightClose");
+            print("Tong Closed");
+            isClosed = true;
+        }
     }
 
     public void OpenTong()
     {
-        // Reset animation
-        TongLeft.GetComponent<Animation>().Rewind();
-        TongRight.GetComponent<Animation>().Rewind();
-        TongLeft.GetComponent<Animation>().Stop("TongLeftClose");
-        TongRight.GetComponent<Animation>().Stop("TongRightClose");
-        
+        // Reset animation to start
+        if (isClosed == true) {
+            TongLeft.GetComponent<Animation>().Play("TongLeftOpen");
+            TongRight.GetComponent<Animation>().Play("TongRightOpen");
+            print("Tong Opened");
+            isClosed = false;
+        }
     }
 }
