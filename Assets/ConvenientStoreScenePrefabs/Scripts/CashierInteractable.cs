@@ -16,6 +16,16 @@ public class CashierInteractable : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController CashierTalk;
 
+    // Add cashier's audio here
+    [SerializeField]
+    private AudioClip[] CashierAudio;
+
+    // Audio Source
+    public AudioSource audioSource;
+
+    public GameObject BGMAudioSource;
+    private AudioSource BAudioSource;
+
 
     void Start()
     {
@@ -57,5 +67,23 @@ public class CashierInteractable : MonoBehaviour
             CashierAnimator.runtimeAnimatorController = CashierIdle as RuntimeAnimatorController;
             
         }
+    }
+
+    public void playAudio(int index)
+    {
+        // Initialize audio source
+        Debug.Log("playAudio");
+        Debug.Log("index: " + index);
+        audioSource.clip = CashierAudio[index];
+
+        // Get BGM Audio Source
+        BAudioSource = BGMAudioSource.GetComponent<AudioSource>() as AudioSource;
+        Debug.Log("BAudioSource: " + BAudioSource);
+        // Pause BGM
+        BAudioSource.enabled = false;
+        // Play Cashier Audio Once
+        audioSource.PlayOneShot(audioSource.clip);
+        // Resume BGM
+        BAudioSource.enabled = true;
     }
 }
