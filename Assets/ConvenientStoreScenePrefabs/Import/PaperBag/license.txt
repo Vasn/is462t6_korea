@@ -1,0 +1,11 @@
+Model Information:
+* title:	Recycled paper bag
+* source:	https://sketchfab.com/3d-models/recycled-paper-bag-fe7dc479bc79439aa579de6e00b3b8fb
+* author:	TBR_VFX (https://sketchfab.com/TBR_VFX)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Recycled paper bag" (https://sketchfab.com/3d-models/recycled-paper-bag-fe7dc479bc79439aa579de6e00b3b8fb) by TBR_VFX (https://sketchfab.com/TBR_VFX) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
