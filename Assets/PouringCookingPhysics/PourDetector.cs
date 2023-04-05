@@ -34,8 +34,11 @@ public class PourDetector : MonoBehaviour
         var newObject = Instantiate(streamPrefab);
         newObject.transform.parent = transform;
         newObject.transform.localPosition = Vector3.zero;
-        
-        
+        // set scale to 0.1, 0.1, 0.1
+        newObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+
+
 
     }
 

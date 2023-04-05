@@ -1,6 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD:Assets/ConvenientStoreScenePrefabs/Noto_Sans_KR/NotoSansKR-Medium SDF.asset.meta
 guid: 9187dd92263c2414c917cbe5522af628
 NativeFormatImporter:
+=======
+guid: 9524432539dd945e99ac3beb67d4f528
+PrefabImporter:
+>>>>>>> main:Assets/BBQ Prefabs/Soju.prefab.meta
+=======
+guid: 9187dd92263c2414c917cbe5522af628
+NativeFormatImporter:
+>>>>>>> main
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 
