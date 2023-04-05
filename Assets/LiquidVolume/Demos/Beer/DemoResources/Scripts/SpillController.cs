@@ -58,7 +58,6 @@ namespace LiquidVolumeFX
 		{
 			yield return new WaitForSeconds (1f);
 			Destroy (spill);
-			print("stop");
 			playerController.GetComponent<DrinkingEtiquette>().isDrinking = false;
 		}
 	}

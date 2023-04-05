@@ -24,7 +24,6 @@ public class PourDetector : MonoBehaviour
     }
 
     private void StartPour(){
-        print("Start");
         // create streamPrefab object at origin
         // streamPrefab has to be a child
         // of the object this script is attached to
@@ -43,7 +42,6 @@ public class PourDetector : MonoBehaviour
     }
 
     private void EndPour(){
-        print("End");
         // destroy streamPrefab object
         Destroy(transform.GetChild(0).gameObject);
 
