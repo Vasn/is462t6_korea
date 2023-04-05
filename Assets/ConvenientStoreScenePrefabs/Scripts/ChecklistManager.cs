@@ -108,4 +108,11 @@ public class ChecklistManager : MonoBehaviour
         
     }
 
+    public bool getCheckoutEligibility(){
+        if(ramen && soju && chips){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
