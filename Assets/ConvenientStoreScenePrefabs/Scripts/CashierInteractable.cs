@@ -26,6 +26,10 @@ public class CashierInteractable : MonoBehaviour
     public GameObject BGMAudioSource;
     private AudioSource BAudioSource;
 
+    public GameObject Basket;
+    private ChecklistManager checklistManager;
+    private bool eligible;
+
 
     void Start()
     {
@@ -33,15 +37,27 @@ public class CashierInteractable : MonoBehaviour
         // Set Cashier Animator to Idle
         CashierAnimator = Cashier.GetComponent<Animator>();
         CashierAnimator.runtimeAnimatorController = CashierIdle as RuntimeAnimatorController;
-
+        // Initialize checklist manager
+        checklistManager = Basket.GetComponent<ChecklistManager>();
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+            checkEligible();
+            if (eligible)
+            {
+                startDialogue();
+            }
+        }
+        
+    }
+
+    private void startDialogue()
+    {
             CashierDialogue.SetActive(true);
-            CashierAnimator.runtimeAnimatorController = CashierTalk as RuntimeAnimatorController;
+            // CashierAnimator.runtimeAnimatorController = CashierTalk as RuntimeAnimatorController;
             if (!started)
             {
                 CashierDialogue.GetComponent<DialogManager>().DisplayNextSentence();
@@ -51,7 +67,6 @@ public class CashierInteractable : MonoBehaviour
             {
                 CashierDialogue.GetComponent<DialogManager>().DisplayCurrentSentence();
             }
-        }
     }
 
     public void OnTriggerExit(Collider other)
@@ -81,9 +96,35 @@ public class CashierInteractable : MonoBehaviour
         Debug.Log("BAudioSource: " + BAudioSource);
         // Pause BGM
         BAudioSource.enabled = false;
+        CashierAnimator.runtimeAnimatorController = CashierTalk as RuntimeAnimatorController;
         // Play Cashier Audio Once
         audioSource.PlayOneShot(audioSource.clip);
         // Resume BGM
         BAudioSource.enabled = true;
+
+        // Track whne audio is done playing
+        StartCoroutine(WaitForAudio());
     }
+
+    IEnumerator WaitForAudio()
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
+        CashierAnimator.runtimeAnimatorController = CashierIdle as RuntimeAnimatorController;
+    }
+
+    private void checkEligible()
+    {
+        if (checklistManager.getCheckoutEligibility())
+        {
+            eligible = true;
+        }
+        else
+        {
+            eligible = false;
+        }
+    }
+
 }
