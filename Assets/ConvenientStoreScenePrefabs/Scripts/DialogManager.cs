@@ -10,6 +10,7 @@ public class DialogManager : MonoBehaviour
     public GameObject LeftButton;
     public GameObject RightButton;
     public GameObject checkoutArea;
+    public GameObject Cashier;
     private List<string> sentencesList = new List<string>();
     private List<string> leftOptionsList = new List<string>();
     private List<string> rightOptionsList = new List<string>();
@@ -22,21 +23,21 @@ public class DialogManager : MonoBehaviour
     {
         // sentences = new Queue<string>();
         // Add sentences to the list
-        sentencesList.Add("안녕하세요, 무엇을 도와 드릴까요? Hello! How may I help you?");
-        sentencesList.Add("비닐봉지가 필요하세요? 100원입니다! Do you need a plastic bag, it will be 100won!");
-        sentencesList.Add("9900원 입니다 현금으로 하세요 카드로 하세요? That will be 9900won Pay by Cash or Card?");
-        sentencesList.Add("우리와 함께 쇼핑해 주셔서 감사합니다! 좋은 하루 되세요! Thank you for shopping with us! Have a nice day!");
+        sentencesList.Add("안녕하세요 어떻게 도와드릴까요?\nHello! How may I help you?");
+        sentencesList.Add("봉투 필요하세요? 100원입니다\nDo you need a plastic bag, it will be 100won!");
+        sentencesList.Add("9천 900원 입니다. 현금아니면 카드로 결제하시겠어요?\nThat will be 9900won. Pay by Cash or Card?");
+        sentencesList.Add("감사합니다! 좋은 하루되세요!\nThank you for shopping with us! Have a nice day!");
         
         // Add left options to the list
         leftOptionsList.Add("");
-        leftOptionsList.Add("네 Yes");
+        leftOptionsList.Add("Yes");
         leftOptionsList.Add("");
         leftOptionsList.Add("");
 
         // Add right options to the list
         rightOptionsList.Add("Next");
-        rightOptionsList.Add("아니요 No");
-        rightOptionsList.Add("카드 Card");
+        rightOptionsList.Add("No");
+        rightOptionsList.Add("Card");
         rightOptionsList.Add("");
         
         Debug.Log("sentencesList.Count: " + sentencesList.Count);
@@ -67,6 +68,8 @@ public class DialogManager : MonoBehaviour
             return;
         }
         string sentence = sentencesList[currentSentence];
+        // Play the audio
+        Cashier.GetComponent<CashierInteractable>().playAudio(currentSentence);
         StartCoroutine(TypeSentence(sentence));
     }
 
@@ -74,6 +77,8 @@ public class DialogManager : MonoBehaviour
     {
         // string sentence = sentences.Dequeue();
         string sentence = sentencesList[currentSentence];
+        // Play the audio
+        Cashier.GetComponent<CashierInteractable>().playAudio(currentSentence);
         StartCoroutine(TypeSentence(sentence));
     }
 
@@ -82,6 +87,8 @@ public class DialogManager : MonoBehaviour
         // string sentence = sentences.Dequeue();
         currentSentence--;
         string sentence = sentencesList[currentSentence];
+        // Play the audio
+        Cashier.GetComponent<CashierInteractable>().playAudio(currentSentence);
         StartCoroutine(TypeSentence(sentence));
     }
 

@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/BNG Framework/Scenes/XR Demo.unity
     guid: a1360534006d3f845bc79b46b93cfec5
+  - enabled: 1
+    path: Assets/Scenes/ConvenientStoreScene.unity
+    guid: a4c6c8ae366b46148bdd6cfb514c663a
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6cad65356826b443db0ce78b0cd971db, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3fd41b4752b8044eaa790693e5de257e, type: 2}
