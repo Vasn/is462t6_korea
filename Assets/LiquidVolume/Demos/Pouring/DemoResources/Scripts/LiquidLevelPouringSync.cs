@@ -12,6 +12,10 @@ namespace LiquidVolumeFX
 		LiquidVolume lv;
 		Rigidbody rb;
 
+		// sound effect
+		public AudioSource audioSource;
+    	public AudioClip liquidPourSound;
+
 		void Start ()
 		{
 			rb = GetComponent<Rigidbody> ();
@@ -23,6 +27,8 @@ namespace LiquidVolumeFX
 		{
 			if (lv.level < 1f) {
 				lv.level += fillSpeed;
+				audioSource.clip = liquidPourSound;
+                audioSource.Play();
 			}
 			UpdateColliderPos ();
 		}

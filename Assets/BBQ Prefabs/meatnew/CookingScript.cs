@@ -16,6 +16,17 @@ public class CookingScript : MonoBehaviour
     int cookingStage = 0;
     public float timer = 0f;
 
+    // burnt meat popup
+    public GameObject MeatReadyMsg;
+    public GameObject MeatBurntMsg;
+    public GameObject bacon;
+    public AudioSource audioSource;
+    public AudioClip meatSizzleSound;
+    public AudioClip meatReadySound;
+
+    // for arrow guide check
+    private bool firstGrab = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +45,7 @@ public class CookingScript : MonoBehaviour
         {
             timer += Time.deltaTime;
             UpdateCookingStage();
+
         }
     }
     // When this object touches another object tagged "Stove" for 5 seconds, change the color of the object to red
@@ -45,6 +57,18 @@ public class CookingScript : MonoBehaviour
         {
             // change meshrenderer's second material to materials[0]
             isColliding = true;
+
+            // sizzle sound only if uncooked
+            if(cookingStage == 0){
+                audioSource.clip = meatSizzleSound;
+                audioSource.Play();
+            }
+
+            // update arrow guide
+            if(!firstGrab){
+                arrowGuideManager.tutorialStage=3;
+                firstGrab = true;
+            }
         }
 
     }
@@ -52,6 +76,8 @@ public class CookingScript : MonoBehaviour
     void OnCollisionExit(Collision collision){
         print("no longer cookin");
         isColliding = false;
+        MeatReadyMsg.SetActive(false);
+        MeatBurntMsg.SetActive(true);
     }
 
     void UpdateCookingStage(){
@@ -60,11 +86,22 @@ public class CookingScript : MonoBehaviour
             ChangeColor(burn);
             burnAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(burnAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) - 1).ToString();
+            MeatReadyMsg.SetActive(false);
+            MeatBurntMsg.SetActive(true);
+
+            if(timer > 15) {
+                MeatBurntMsg.SetActive(false);
+            }
         }
         else if(timer > 5 && cookingStage == 0){
             cookingStage = 1;
             ChangeColor(cook);
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
+
+            // alert for meat is ready
+            MeatReadyMsg.SetActive(true);
+            audioSource.clip = meatReadySound;
+            audioSource.Play();
         }
     }
 

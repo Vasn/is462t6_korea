@@ -8,25 +8,25 @@ public class TongController : MonoBehaviour
     public GameObject TongRight;
     public GameObject SnapPoint;
     public bool isClosed = false;
+
+    // for arrow guide check
+    private bool firstGrab = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
         // print out the item the object is colliding with based on box collider
 
 
-
+        
         
     }
-
-
 
     public void CloseTong()
     {
@@ -35,13 +35,13 @@ public class TongController : MonoBehaviour
             TongLeft.GetComponent<Animation>().Play("TongLeftClose");
             TongRight.GetComponent<Animation>().Play("TongRightClose");
             print("Tong Closed");
-            
-            
-
-
-
-
             isClosed = true;
+            
+            // update arrow guide
+            if(!firstGrab){
+                arrowGuideManager.tutorialStage=1;
+                firstGrab = true;
+            }
         }
     }
 
