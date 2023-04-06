@@ -44,6 +44,7 @@ public class StampManager : MonoBehaviour
     public float twostartime;
     
     public TextMeshProUGUI clocktext;
+
     public bool completed;
 
     public float time;
@@ -57,11 +58,9 @@ public class StampManager : MonoBehaviour
         // if scores_placeholder has elements inside, assign static scores with this value
         if(scores_placeholder.Count > 0){
             scores = scores_placeholder;
-            Debug.Log("Stored scores");
+            
         }
 
-        Debug.Log("Start function called");
-        Debug.Log("scores_placeholder count: " + scores_placeholder.Count);
         // initialise image list to be all the images for the different stars
         // stamps = new Texture[]{one_star, two_star, three_star};
         stamp_holders = new RawImage[]{stamp1, stamp2, stamp3, stamp4};
@@ -115,11 +114,15 @@ public class StampManager : MonoBehaviour
         }else{StopWatchCalc();}
 
         // FOR TESTING: REPLACE WITH YOUR WIN CONDITION
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            completed = true;
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     completed = true;
+        // }
         
+    }
+
+    public void setComplete(){
+        completed = true;
     }
 
     void StopWatchCalc(){
