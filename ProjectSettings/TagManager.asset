@@ -11,6 +11,9 @@ TagManager:
   - Basket
   - Chips
   - Meat
+  - Door
+  - SlidingDoor
+  - Hand
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - UI
   - BBQ
   - Tongs
-  - 
+  - LayerToDetect
   - 
   - 
   - 
