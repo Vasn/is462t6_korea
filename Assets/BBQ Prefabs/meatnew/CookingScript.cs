@@ -12,7 +12,7 @@ public class CookingScript : MonoBehaviour
     // ui object
     public GameObject cookAmount;
     public GameObject burnAmount;
-    bool isColliding = false;
+    public bool isColliding = false;
     int cookingStage = 0;
     public float timer = 0f;
 
@@ -50,6 +50,7 @@ public class CookingScript : MonoBehaviour
     }
 
     void OnCollisionExit(Collision collision){
+        print("no longer cookin");
         isColliding = false;
     }
 

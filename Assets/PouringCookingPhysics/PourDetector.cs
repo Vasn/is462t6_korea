@@ -24,7 +24,6 @@ public class PourDetector : MonoBehaviour
     }
 
     private void StartPour(){
-        print("Start");
         // create streamPrefab object at origin
         // streamPrefab has to be a child
         // of the object this script is attached to
@@ -34,13 +33,15 @@ public class PourDetector : MonoBehaviour
         var newObject = Instantiate(streamPrefab);
         newObject.transform.parent = transform;
         newObject.transform.localPosition = Vector3.zero;
-        
-        
+        // set scale to 0.1, 0.1, 0.1
+        newObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+
+
 
     }
 
     private void EndPour(){
-        print("End");
         // destroy streamPrefab object
         Destroy(transform.GetChild(0).gameObject);
 

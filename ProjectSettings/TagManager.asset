@@ -8,6 +8,9 @@ TagManager:
   - Ramen
   - Soju
   - Toothpaste
+  - Basket
+  - Chips
+  - Meat
   layers:
   - Default
   - TransparentFX
@@ -15,8 +18,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - BBQ
+  - Tongs
   - 
   - 
   - 
