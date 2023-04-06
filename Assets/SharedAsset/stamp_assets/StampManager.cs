@@ -7,7 +7,8 @@ using TMPro;
 public class StampManager : MonoBehaviour
 {
     [Tooltip("Array of scores for each scene. 1 means 1 star and so on")]
-    public List<int> scores;
+    public List<int> scores_placeholder;
+    public static List<int> scores;
 
     [Tooltip("This is the screen that pops up when the scene is done object")]
     public GameObject scoreboard;
@@ -45,13 +46,22 @@ public class StampManager : MonoBehaviour
     public TextMeshProUGUI clocktext;
     public bool completed;
 
-    private float time;
+    public float time;
     private float minutes;
     private float seconds;
     
     // Start is called before the first frame update
     void Start()
     {
+
+        // if scores_placeholder has elements inside, assign static scores with this value
+        if(scores_placeholder.Count > 0){
+            scores = scores_placeholder;
+            Debug.Log("Stored scores");
+        }
+
+        Debug.Log("Start function called");
+        Debug.Log("scores_placeholder count: " + scores_placeholder.Count);
         // initialise image list to be all the images for the different stars
         // stamps = new Texture[]{one_star, two_star, three_star};
         stamp_holders = new RawImage[]{stamp1, stamp2, stamp3, stamp4};
@@ -59,6 +69,7 @@ public class StampManager : MonoBehaviour
         scoreboard.SetActive(false);
         completed=false;
         Scene_no = scores.Count;
+
     }
 
     // Update is called once per frame
@@ -70,19 +81,6 @@ public class StampManager : MonoBehaviour
             // change the background to the current scene background
             scoreboard.GetComponent<Renderer>().material.mainTexture = scene_backgrounds[Scene_no];
             
-            // if(Scene_no>0){
-            //     if(time < threestartime){
-            //         // change the texture of the current stamp to the three star texture
-            //         stamp_holders[Scene_no - 1].texture = stamps[2];
-            //     }
-            //     else if(time < twostartime){
-            //         stamp_holders[Scene_no - 1].texture = stamps[1];
-            //     }
-            //     else{
-            //         stamp_holders[Scene_no - 1].texture = stamps[0];
-            //     }
-                
-            // }
             // Update the score array
             int new_score = time<threestartime?3:time<twostartime?2:1;
             for(int i = Scene_no - scores.Count+1; i > 0; i--)

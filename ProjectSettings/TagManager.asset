@@ -14,6 +14,8 @@ TagManager:
   - Door
   - SlidingDoor
   - Hand
+  - Zombie
+  - scoreZone
   layers:
   - Default
   - TransparentFX
