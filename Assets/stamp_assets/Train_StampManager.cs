@@ -59,6 +59,9 @@ public class Train_StampManager : MonoBehaviour
     IEnumerator PlayAnnouncement()
     {
         while(!exitTrain){
+            if (exitTrain){
+                break;
+            }
             for (int i = 0; i < train_announcements.Length; i++)
             {
                 trainMoving = true;
@@ -77,9 +80,6 @@ public class Train_StampManager : MonoBehaviour
                 SetDoorManagerComponentsEnabled(true);
                 // wait until the audio clip is finished playing
                 yield return new WaitForSeconds(train_announcer.clip.length+5);
-            }
-            if (exitTrain){
-                break;
             }
         }
 

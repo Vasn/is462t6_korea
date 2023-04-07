@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class ZombieManager : MonoBehaviour
 {
-    public AudioClip zombieSound;
-    public AudioClip hitSound;
-    public float minSoundInterval = 1f;
-    public float maxSoundInterval = 3f;
-    
-    private AudioSource audioSource;
-    private float nextSoundTime;
+    public AudioClip backgroundSound;
+    public AudioClip collisionSound;
+    public float minBackgroundInterval = 3f;
+    public float maxBackgroundInterval = 10f;
 
-    // Start is called before the first frame update
-    void Start(){
+    private AudioSource audioSource;
+
+    void Start () {
         audioSource = GetComponent<AudioSource>();
-        nextSoundTime = Time.time + Random.Range(minSoundInterval, maxSoundInterval);
+        audioSource.clip = backgroundSound;
+        audioSource.loop = true;
+        audioSource.Play();
+        StartCoroutine(PlayBackgroundSound());
     }
 
-    void Update () {
-        if (Time.time >= nextSoundTime) {
-            audioSource.PlayOneShot(zombieSound);
-            SetNextSoundTime();
+    IEnumerator PlayBackgroundSound() {
+        while (true) {
+            yield return new WaitForSeconds(Random.Range(minBackgroundInterval, maxBackgroundInterval));
+            audioSource.Play();
         }
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Hand")) {
-            audioSource.PlayOneShot(hitSound);
+        if (collision.gameObject.CompareTag("Head")) {
+            Debug.Log("collide in head");
+            StopCoroutine("PlayBackgroundSound");
+            audioSource.Stop();
+            audioSource.PlayOneShot(collisionSound);
         }
-    }
-
-    void SetNextSoundTime() {
-        nextSoundTime = Time.time + Random.Range(minSoundInterval, maxSoundInterval);
     }
 }
