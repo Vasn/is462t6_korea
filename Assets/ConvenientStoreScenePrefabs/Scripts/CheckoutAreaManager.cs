@@ -110,24 +110,24 @@ public class CheckoutAreaManager : MonoBehaviour
         // unhide the plastic bag
         plasticBag.SetActive(true);
 
-        // Put Items from basket into plastic bag
-        foreach (Transform child in newBasket.transform)
-        {
-            if (child.gameObject.tag == "Basket")
-            {
-                continue;
-            }
-            // Get the position of the plastic bag
-            Vector3 plasticPosition = plasticBag.transform.position;
-            // Get the position of the item
-            Vector3 itemPosition = child.transform.position;
-            // Get the difference between the two positions
-            Vector3 difference = itemPosition - plasticPosition;
-            // Get the position of the item in the world
-            Vector3 worldPosition = plasticPosition + difference;
-            // Spawn the item in the world
-            Instantiate(child.gameObject, worldPosition, Quaternion.identity);
-        }
+        // // Put Items from basket into plastic bag
+        // foreach (Transform child in newBasket.transform)
+        // {
+        //     if (child.gameObject.tag == "Basket")
+        //     {
+        //         continue;
+        //     }
+        //     // Get the position of the plastic bag
+        //     Vector3 plasticPosition = plasticBag.transform.position;
+        //     // Get the position of the item
+        //     Vector3 itemPosition = child.transform.position;
+        //     // Get the difference between the two positions
+        //     Vector3 difference = itemPosition - plasticPosition;
+        //     // Get the position of the item in the world
+        //     Vector3 worldPosition = plasticPosition + difference;
+        //     // Spawn the item in the world
+        //     Instantiate(child.gameObject, worldPosition, Quaternion.identity);
+        // }
 
         // Destroy the basket
         removeBasket();

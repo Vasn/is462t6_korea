@@ -141,6 +141,7 @@ public class ChecklistManager : MonoBehaviour
         // Remove all scripts component        
         ramen.GetComponent<Rigidbody>().isKinematic = true;
         ramen.GetComponent<BoxCollider>().enabled = false;
+
         // Destroy original
         Destroy(other.gameObject);
     }

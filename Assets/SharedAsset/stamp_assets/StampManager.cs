@@ -68,6 +68,7 @@ public class StampManager : MonoBehaviour
         }
         LogAllScenes();
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log("Current scene index: " + currentSceneIndex);
 
         // If score array is empty, initialise it
         if(scores == null){

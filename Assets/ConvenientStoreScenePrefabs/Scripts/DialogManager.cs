@@ -142,7 +142,7 @@ public class DialogManager : MonoBehaviour
                 if (currentSentence >= 3 && !inProgress){
                     checkoutArea.GetComponent<CheckoutAreaManager>().removeBasket();
                 }
-                LeftButton.SetActive(true);
+                // LeftButton.SetActive(true);
             }
             
         }
