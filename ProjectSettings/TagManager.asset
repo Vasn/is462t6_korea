@@ -16,6 +16,10 @@ TagManager:
   - Hand
   - Zombie
   - scoreZone
+  - StartBtn
+  - Exit
+  - zombie
+  - NPCs
   layers:
   - Default
   - TransparentFX
