@@ -43,10 +43,11 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!ramen){
                 ramen = true;
-                other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = ramenTransform.position;
-                // destroy rigidbody and collider
+                // set this position to 0,0,0
+                other.gameObject.transform.position = new Vector3(0,0,0);
+                other.gameObject.transform.SetParent(ramenTransform.transform,false);
+                // other.gameObject.transform.parent = ramenTransform.transform;
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
             }
@@ -56,9 +57,10 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!soju){
                 soju = true;
-                other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = sojuTransform.position;
+                other.gameObject.transform.position = new Vector3(0,0,0);
+                other.gameObject.transform.SetParent(sojuTransform.transform,false);
+                // other.gameObject.transform.parent = sojuTransform.transform;
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
             }
@@ -67,9 +69,10 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!chips){
                 chips = true;
-                other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = chipsTransform.position;
+                other.gameObject.transform.position = new Vector3(0,0,0);
+                other.gameObject.transform.SetParent(chipsTransform.transform,false);
+                // other.gameObject.transform.parent = chipsTransform.transform;
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
             }

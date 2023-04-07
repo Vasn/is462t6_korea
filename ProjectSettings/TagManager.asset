@@ -11,6 +11,11 @@ TagManager:
   - Basket
   - Chips
   - Meat
+  - Door
+  - SlidingDoor
+  - Hand
+  - Zombie
+  - scoreZone
   layers:
   - Default
   - TransparentFX
@@ -20,7 +25,11 @@ TagManager:
   - UI
   - BBQ
   - Tongs
+<<<<<<< HEAD
   - Glow
+=======
+  - LayerToDetect
+>>>>>>> main
   - 
   - 
   - 
