@@ -50,9 +50,9 @@ public class Train_StampManager : MonoBehaviour
     {
         if (!gameStart){
             if (GameObject.Find("FloorTwo").activeInHierarchy == true){
-                StartCoroutine(PlayAnnouncement());
                 gameStart = true;
                 stampManager.time=0;
+                StartCoroutine(PlayAnnouncement());
             } else {
                 Debug.Log("Game has not started");
             }
@@ -129,7 +129,7 @@ public class Train_StampManager : MonoBehaviour
                 train_announcer.mute=true;
                 minimap.SetActive(false);
             }            
-        }    
+     
     }
 
     void OnCollisionEnter(Collision other){
@@ -142,6 +142,14 @@ public class Train_StampManager : MonoBehaviour
             Debug.Log("Hit by zombie.");
             StartCoroutine(Delay());
         }
+    }
+
+    private void SetDoorManagerComponentsEnabled(bool isEnabled)
+    {
+        innerLeft.GetComponent<DoorManager>().enabled = isEnabled;
+        innerRight.GetComponent<DoorManager>().enabled = isEnabled;
+        outerLeft.GetComponent<DoorManager>().enabled = isEnabled;
+        outerRight.GetComponent<DoorManager>().enabled = isEnabled;
     }
 
 
