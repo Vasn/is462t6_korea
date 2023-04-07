@@ -13,12 +13,13 @@ public class Train_StampManager : MonoBehaviour
     // private string hitObject;
     
     private Vector3 initialPosition;
-    private Transform parentTransform;
+    private GameObject spawn;
+    private GameObject playerControl;
 
-    public GameObject innerLeft;
-    public GameObject innerRight;
-    public GameObject outerLeft;
-    public GameObject outerRight;
+    private GameObject innerLeft;
+    private GameObject innerRight;
+    private GameObject outerLeft;
+    private GameObject outerRight;
 
     public StampManager stampManager;
 
@@ -37,9 +38,8 @@ public class Train_StampManager : MonoBehaviour
         innerRight = GameObject.Find("/Subway/Mutable/Subway/TriggerRight");
         outerLeft = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerLeft");
         outerRight = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerRight");
-        parentTransform = transform.parent.transform;
-        initialPosition = parentTransform.position;
-        stampManager.time=0;
+        spawn = GameObject.Find("Spawn");
+        playerControl = GameObject.Find("/XR Rig Advanced/PlayerController");
     }
 
     // Update is called once per frame
@@ -49,6 +49,9 @@ public class Train_StampManager : MonoBehaviour
             if (GameObject.Find("FloorTwo").activeInHierarchy == true){
                 StartCoroutine(PlayAnnouncement());
                 gameStart = true;
+                stampManager.time=0;
+            } else {
+                Debug.Log("Game has not started");
             }
         }
     }
@@ -84,8 +87,8 @@ public class Train_StampManager : MonoBehaviour
 
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1);
         stampManager.time += 10;
+        yield return new WaitForSeconds(2);
         Debug.Log("Time added 10.");
     }
 
@@ -104,8 +107,9 @@ public class Train_StampManager : MonoBehaviour
 
             if(train_announcer.clip != train_announcements[1]){
                 Debug.Log("Incorrect station, add 10 seconds to timer.");
-                Debug.Log(initialPosition);
-                parentTransform.position = initialPosition;
+                Vector3 position = spawn.transform.position;
+                Debug.Log(position);
+                playerControl.transform.position = position;
                 StartCoroutine(Delay());
             } else {
                 Debug.Log("Correct station, proceed with caution.");
@@ -119,6 +123,8 @@ public class Train_StampManager : MonoBehaviour
     // hitObject = other.gameObject.tag;
     // Debug.Log(hitObject);
         if(other.gameObject.tag == "zombie"){
+            // train_announcer.clip = monsterTrigger;
+            // train_announcer.Play();
             Debug.Log("Hit by zombie.");
             StartCoroutine(Delay());
         }
