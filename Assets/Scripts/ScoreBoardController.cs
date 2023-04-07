@@ -7,6 +7,7 @@ public class ScoreBoardController : MonoBehaviour
 {
     public TextMeshPro scoreText;
     public static int startPoints = 0;
+    public GameObject stampManagerObject;
 
     // For game timer
     private bool gameStarted = false;
@@ -76,6 +77,8 @@ public class ScoreBoardController : MonoBehaviour
 
         btnText.text = "Restart!";
         btn.SetActive(true);
+
+        stampManagerObject.GetComponent<StampManager>().setStars(Mathf.Min(startPoints/4,3));
         Debug.Log("GAME IS OVER!");
     }
 }
