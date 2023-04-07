@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+// using BNG;
 
 public class StampManager : MonoBehaviour
 {
     [Tooltip("Array of scores for each scene. 1 means 1 star and so on")]
     public List<int> scores_placeholder;
-    public static List<int> scores;
+    public static int[] scores;
 
     [Tooltip("This is the screen that pops up when the scene is done object")]
     public GameObject scoreboard;
@@ -68,10 +69,15 @@ public class StampManager : MonoBehaviour
         LogAllScenes();
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-        // if scores_placeholder has elements inside, assign static scores with this value
-        if(scores_placeholder.Count > 0){
-            scores = scores_placeholder;
+        // If score array is empty, initialise it
+        if(scores == null){
+            scores = new int[scenePaths.Length];
         }
+
+        // if scores_placeholder has elements inside, assign static scores with this value
+        // if(scores_placeholder.Count > 0){
+        //     scores = scores_placeholder;
+        // }
 
         // initialise image list to be all the images for the different stars
         // stamps = new Texture[]{one_star, two_star, three_star};
@@ -93,6 +99,10 @@ public class StampManager : MonoBehaviour
         if(completed){
             // enable scoreboard
             scoreboard.SetActive(true);
+
+            // Detach scoreboard from player
+            // scoreboard.transform.SetParent(null, true);
+
             // change the background to the current scene background
             scoreboard.GetComponent<Renderer>().material.mainTexture = scene_backgrounds[Scene_no];
             
@@ -112,6 +122,7 @@ public class StampManager : MonoBehaviour
                     // change the stamp_holder texture to the correct texture depending on the score
                     if(scores[i] == 3){
                         stamp_holders[i].texture = stamps[2];
+
                     }
                     else if(scores[i] == 2){
                         stamp_holders[i].texture = stamps[1];
@@ -121,6 +132,11 @@ public class StampManager : MonoBehaviour
                     }
                 }else{
                     stamp_holders[i].enabled = false;
+                }
+                if (Scene_no+1 < stamp_holders.Length){
+                    // Set texture to black 
+                    stamp_holders[Scene_no+1].color = new Color(0,0,0,0.8f);
+                    stamp_holders[Scene_no+1].enabled = true;
                 }
             }
             
@@ -137,7 +153,6 @@ public class StampManager : MonoBehaviour
 
     public void setComplete(){
         int new_score = time<threestartime?3:time<twostartime?2:1;
-        setStars(new_score);
         completed = true;
     }
 
@@ -195,6 +210,16 @@ public class StampManager : MonoBehaviour
     {
         SceneManager.LoadScene(currentSceneIndex);
     }
+
+    public void LoadSceneFromButton(GameObject button)
+    {
+        // Get button Name
+        string buttonName = button.name;
+        int sceneIndex = int.Parse(buttonName.Substring(buttonName.Length - 1)) -1;
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    // Unity event to listen to when the player presses the menu button
 
     // IEnumerator TransitionToNextScene()
     // {
