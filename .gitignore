@@ -22,6 +22,12 @@
 # Visual Studio cache directory
 .vs/
 
+# Ignore Assets/Tokyo_Street/Other/Terrain.asset
+Assets/Tokyo_Street/Other/Terrain.asset
+/Assets/Tokyo_Street/Other/Terrain.asset
+Assets/Tokyo_Street/Other/Terrain.*
+/Assets/Tokyo_Street/Other/Terrain.*
+
 # Gradle cache directory
 .gradle/
 
