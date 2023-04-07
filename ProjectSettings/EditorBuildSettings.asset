@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RecycleScene/Night_Demo.unity
     guid: a805b044355dc7041a09577b0da0e09e
+  - enabled: 1
+    path: Assets/Scenes/CreditScene.unity
+    guid: 71c480b1f28ab425b9135c6f3c9b44c8
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6cad65356826b443db0ce78b0cd971db, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3fd41b4752b8044eaa790693e5de257e, type: 2}
