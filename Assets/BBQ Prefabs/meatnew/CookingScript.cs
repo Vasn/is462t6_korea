@@ -23,7 +23,8 @@ public class CookingScript : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip meatSizzleSound;
     public AudioClip meatReadySound;
-
+    GameObject meatReadyMsg;
+    GameObject meatBurntMsg;
     // for arrow guide check
     private bool firstGrab = false;
 
@@ -77,12 +78,13 @@ public class CookingScript : MonoBehaviour
         isColliding = false;
         audioSource.Stop();
         // if meatreadymsgprefab is instantiated, destroy it
-        if(MeatReadyMsgPrefab != null){
-            Destroy(MeatReadyMsgPrefab);
+        if (meatBurntMsg != null){
+            meatBurntMsg.SetActive(false);
         }
-        if(MeatReadyMsgPrefab != null){
-            Destroy(MeatBurntMsgPrefab);
+        if (meatReadyMsg != null){
+            meatReadyMsg.SetActive(false);
         }
+        
     }
 
     void UpdateCookingStage(){
@@ -92,13 +94,17 @@ public class CookingScript : MonoBehaviour
             burnAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(burnAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) - 1).ToString();
             // MeatReadyMsg.SetActive(false);
-            // MeatBurntMsg.SetActive(true);
+            // disable meatReadyMsg
            
-            Instantiate(MeatBurntMsgPrefab, transform.position, Quaternion.identity);
+            meatReadyMsg.SetActive(false);
+                // MeatBurntMsg.SetActive(true);
+            meatBurntMsg = Instantiate(MeatBurntMsgPrefab, transform.position, Quaternion.identity);
+            meatBurntMsg.SetActive(true);
             // rotate the prefab 180 degrees
-            MeatBurntMsgPrefab.transform.Rotate(0, 180, 0);
-            
-            
+            meatBurntMsg.transform.position = new Vector3(meatBurntMsg.transform.position.x, meatBurntMsg.transform.position.y + 0.1f, meatBurntMsg.transform.position.z);
+            // rotate the prefab 180 degrees
+            meatBurntMsg.transform.Rotate(0, 180, 0);
+
             // MeatBurntMsg.SetActive(false);
             
             
@@ -110,9 +116,16 @@ public class CookingScript : MonoBehaviour
 
             // alert for meat is ready
             // MeatReadyMsg.SetActive(true);
-            Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
+            // show message above current object position facing the camera
+            meatReadyMsg = Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
+            meatReadyMsg.SetActive(true);
+            // move prefab up y 0.75 unit
+            meatReadyMsg.transform.position = new Vector3(meatReadyMsg.transform.position.x, meatReadyMsg.transform.position.y + 0.1f, meatReadyMsg.transform.position.z);
             // rotate the prefab 180 degrees
-            MeatReadyMsgPrefab.transform.Rotate(0, 180, 0);
+            meatReadyMsg.transform.Rotate(0, 180, 0);
+
+            //meatReadyMsg = Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
+            // rotate the prefab 180 degrees
             audioSource.clip = meatReadySound;
             audioSource.Play();
             
