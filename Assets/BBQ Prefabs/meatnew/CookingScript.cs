@@ -17,8 +17,8 @@ public class CookingScript : MonoBehaviour
     public float timer = 0f;
 
     // burnt meat popup
-    public GameObject MeatReadyMsg;
-    public GameObject MeatBurntMsg;
+    public GameObject MeatReadyMsgPrefab; // to create these prefabs and follow bacon
+    public GameObject MeatBurntMsgPrefab; // to create these prefabs and follow bacon
     public GameObject bacon;
     public AudioSource audioSource;
     public AudioClip meatSizzleSound;
@@ -45,7 +45,6 @@ public class CookingScript : MonoBehaviour
         {
             timer += Time.deltaTime;
             UpdateCookingStage();
-
         }
     }
     // When this object touches another object tagged "Stove" for 5 seconds, change the color of the object to red
@@ -76,6 +75,7 @@ public class CookingScript : MonoBehaviour
     void OnCollisionExit(Collision collision){
         print("no longer cookin");
         isColliding = false;
+        audioSource.Stop();
     }
 
     void UpdateCookingStage(){
@@ -84,12 +84,13 @@ public class CookingScript : MonoBehaviour
             ChangeColor(burn);
             burnAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(burnAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) - 1).ToString();
-            MeatReadyMsg.SetActive(false);
-            MeatBurntMsg.SetActive(true);
-
-            if(timer > 15) {
-                MeatBurntMsg.SetActive(false);
-            }
+            // MeatReadyMsg.SetActive(false);
+            // MeatBurntMsg.SetActive(true);
+            Destroy(MeatReadyMsgPrefab, 0);
+            Instantiate(MeatBurntMsgPrefab, transform.position, Quaternion.identity);
+            
+            // MeatBurntMsg.SetActive(false);
+            Destroy(MeatBurntMsgPrefab, 5);
         }
         else if(timer > 5 && cookingStage == 0){
             cookingStage = 1;
@@ -97,7 +98,8 @@ public class CookingScript : MonoBehaviour
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
 
             // alert for meat is ready
-            MeatReadyMsg.SetActive(true);
+            // MeatReadyMsg.SetActive(true);
+            Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
             audioSource.clip = meatReadySound;
             audioSource.Play();
         }
