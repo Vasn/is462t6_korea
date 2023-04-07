@@ -120,6 +120,7 @@ public class StampManager : MonoBehaviour
                 if(i <= Scene_no)
                 {
                     stamp_holders[i].enabled = true;
+                    // Debug.Log("score: " + scores[i] + " Scene_no: " + Scene_no);
                     // change the stamp_holder texture to the correct texture depending on the score
                     if(scores[i] == 3){
                         stamp_holders[i].texture = stamps[2];
@@ -134,7 +135,7 @@ public class StampManager : MonoBehaviour
                 }else{
                     stamp_holders[i].enabled = false;
                 }
-                if (Scene_no+1 < stamp_holders.Length){
+                if (Scene_no+1 < stamp_holders.Length-1){
                     // Set texture to black 
                     stamp_holders[Scene_no+1].color = new Color(0,0,0,0.8f);
                     stamp_holders[Scene_no+1].enabled = true;
@@ -170,7 +171,7 @@ public class StampManager : MonoBehaviour
 
     public void setStars(int stars){
         scores[Scene_no] = stars;
-        setComplete();
+        completed = true;
     }
 
     void LogAllScenes()
