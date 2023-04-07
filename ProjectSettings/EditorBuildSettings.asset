@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ConvenientStoreScene.unity
     guid: a4c6c8ae366b46148bdd6cfb514c663a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BBQScene.unity
     guid: f36cac4cf87dd45dfa385d10571efb2d
   m_configObjects:
