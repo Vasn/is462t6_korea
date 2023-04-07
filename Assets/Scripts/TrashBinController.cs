@@ -5,6 +5,9 @@ using UnityEngine;
 public class TrashBinController : MonoBehaviour
 {
     public GameObject bin;
+    public AudioSource feedbackAudioSource;
+    public AudioClip[] wrongFeedback;
+    public AudioClip[] correctFeedback;
 
     // Start is called before the first frame update
     void Start()
@@ -37,11 +40,16 @@ public class TrashBinController : MonoBehaviour
 
             Debug.Log("CORRECT!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints += 1;
+
+            feedbackAudioSource.clip = correctFeedback[Random.Range(0, correctFeedback.Length)];
+            feedbackAudioSource.Play();
         }
         else if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("General") || other.gameObject.CompareTag("Can") || other.gameObject.CompareTag("Glass") || other.gameObject.CompareTag("Paper"))
         {
             Debug.Log("WRONG!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints -= 1;
+            feedbackAudioSource.clip = wrongFeedback[Random.Range(0, wrongFeedback.Length)];
+            feedbackAudioSource.Play();
         }
 
     }

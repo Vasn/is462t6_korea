@@ -24,7 +24,7 @@ public class ScoreBoardController : MonoBehaviour
     // Start is called before the first frame update
     void Start()    
     {
-        scoreText.text = startPoints.ToString();
+        scoreText.text = "Score: " + startPoints.ToString();
         timeLeft = timerDuration;
     }
 
@@ -66,7 +66,7 @@ public class ScoreBoardController : MonoBehaviour
 
     public void EndGame()
     {
-        scoreText.text = "Game Ended!\nYou scored: " + startPoints.ToString();
+        scoreText.text = "Game Ended! Score: " + startPoints.ToString();
         gameEnded = true;
         gameStarted = false;
 
