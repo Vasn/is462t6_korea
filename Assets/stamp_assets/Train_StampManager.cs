@@ -88,7 +88,7 @@ public class Train_StampManager : MonoBehaviour
 
     IEnumerator Delay()
     {
-        stampManager.time += 10;
+        // stampManager.time += 10;
         yield return new WaitForSeconds(2);
         Debug.Log("Time added 10.");
     }
@@ -107,20 +107,14 @@ public class Train_StampManager : MonoBehaviour
             exitTrain = true;
             SetDoorManagerComponentsEnabled(false);
             Debug.Log($"This is the clip: {train_announcer.clip.name}");
-            // if the audio clip playing currently is the 2nd one, the scene is completed
-            if(train_announcer.clip == train_announcements[1]){
-                stampManager.completed = true;
-            }else{
-                Debug.Log("This is not the right stop bro");
-            }
-        }
 
             if(train_announcer.clip != train_announcements[1]){
                 Debug.Log("Incorrect station, add 10 seconds to timer.");
                 Vector3 position = spawn.transform.position;
                 Debug.Log(position);
                 playerControl.transform.position = position;
-                StartCoroutine(Delay());
+                stampManager.time += 10;
+                // StartCoroutine(Delay());
             } else {
                 Debug.Log("Correct station, proceed with caution.");
                 train_announcer.Stop();
@@ -129,7 +123,7 @@ public class Train_StampManager : MonoBehaviour
                 train_announcer.mute=true;
                 minimap.SetActive(false);
             }            
-     
+        }
     }
 
     void OnCollisionEnter(Collision other){
@@ -140,7 +134,8 @@ public class Train_StampManager : MonoBehaviour
             // train_announcer.clip = monsterTrigger;
             // train_announcer.Play();
             Debug.Log("Hit by zombie.");
-            StartCoroutine(Delay());
+            // StartCoroutine(Delay());
+            stampManager.time += 10;
         }
     }
 
