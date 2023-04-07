@@ -135,7 +135,7 @@ public class StampManager : MonoBehaviour
                 }else{
                     stamp_holders[i].enabled = false;
                 }
-                if (Scene_no+1 < stamp_holders.Length-1){
+                if (Scene_no+1 < stamp_holders.Length){
                     // Set texture to black 
                     stamp_holders[Scene_no+1].color = new Color(0,0,0,0.8f);
                     stamp_holders[Scene_no+1].enabled = true;
