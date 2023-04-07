@@ -7,7 +7,7 @@ public class BBQSceneManager : MonoBehaviour
     public GameObject firstAmount;
     public GameObject secondAmount;
     public GameObject thirdAmount;
-    
+    public GameObject fourthAmount;
     public GameObject timer;
     
     // integer score
@@ -26,7 +26,7 @@ public class BBQSceneManager : MonoBehaviour
     void Update()
     {
         // Countdown from 2 minutes
-        timer.GetComponent<UnityEngine.UI.Text>().text = (60 - Time.timeSinceLevelLoad).ToString("F0");
+        timer.GetComponent<UnityEngine.UI.Text>().text = (90 - Time.timeSinceLevelLoad).ToString("F0");
         if (timer.GetComponent<UnityEngine.UI.Text>().text == "0")
         {
             // Game over
@@ -43,10 +43,12 @@ public class BBQSceneManager : MonoBehaviour
         ifOver = true;
         if (ifOver)
         {
-            print("ovar!");
             if (firstAmount.GetComponent<UnityEngine.UI.Text>().text == "0")
             {
-                score += 1;
+                if (fourthAmount.GetComponent<UnityEngine.UI.Text>().text == "5")
+                {
+                    score += 1;
+                }
             }
             if (secondAmount.GetComponent<UnityEngine.UI.Text>().text == "100")
             {
