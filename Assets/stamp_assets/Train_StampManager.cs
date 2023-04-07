@@ -25,6 +25,9 @@ public class Train_StampManager : MonoBehaviour
 
     public AudioClip trainMoveSound;
 
+    public MapPoints mapPoints;
+    public GameObject minimap;
+
     [Tooltip("This holds the audioSource for the train announcements")]
     public AudioSource train_announcer;
     [Tooltip("This holds the announcement MP3 files")]
@@ -58,30 +61,28 @@ public class Train_StampManager : MonoBehaviour
     //  play announcements corouting loops through the train_announcements array and plays them with a 5 second gap between each clip
     IEnumerator PlayAnnouncement()
     {
-        while(!exitTrain){
-            if (exitTrain){
-                break;
-            }
-            for (int i = 0; i < train_announcements.Length; i++)
-            {
-                trainMoving = true;
-                if (trainMoving){
-                    train_announcer.clip = trainMoveSound;
-                    train_announcer.Play();
-                    SetDoorManagerComponentsEnabled(false);
-                    Debug.Log("====Train Moving====");
-                    yield return new WaitForSeconds (5);
-                }
-                Debug.Log("====Playing announcement====");
-                Debug.Log(train_announcements[i].name);
-                train_announcer.clip = train_announcements[i];
+        for (int i = 0; i < train_announcements.Length; i++)
+        {
+            trainMoving = true;
+            if (trainMoving){
+                train_announcer.clip = trainMoveSound;
                 train_announcer.Play();
-                trainMoving = false;
-                SetDoorManagerComponentsEnabled(true);
-                // wait until the audio clip is finished playing
-                yield return new WaitForSeconds(train_announcer.clip.length+5);
+                SetDoorManagerComponentsEnabled(false);
+                Debug.Log("====Train Moving====");
+                yield return new WaitForSeconds (5);
             }
-        }
+            Debug.Log("====Playing announcement====");
+            Debug.Log(train_announcements[i].name);
+            train_announcer.clip = train_announcements[i];
+            train_announcer.Play();
+            mapPoints.ChangeLights(train_announcements[i].name.ToString());
+            
+            trainMoving = false;
+            SetDoorManagerComponentsEnabled(true);
+            // wait until the audio clip is finished playing
+            yield return new WaitForSeconds(train_announcer.clip.length+5);
+            }
+        
 
     }
 
@@ -101,6 +102,7 @@ public class Train_StampManager : MonoBehaviour
             stampManager.completed = true;
         }
         if(other.gameObject.CompareTag("Exit")){
+            Debug.Log("------====== Reached exit, filter to next stage.");
             exitTrain = true;
             SetDoorManagerComponentsEnabled(false);
             Debug.Log($"This is the clip: {train_announcer.clip.name}");
@@ -114,6 +116,10 @@ public class Train_StampManager : MonoBehaviour
             } else {
                 Debug.Log("Correct station, proceed with caution.");
                 train_announcer.Stop();
+                StopCoroutine(PlayAnnouncement());
+                train_announcer.volume=0;
+                train_announcer.mute=true;
+                minimap.SetActive(false);
             }            
         }    
     }
