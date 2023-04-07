@@ -5,6 +5,13 @@ using UnityEngine;
 public class TrashBinController : MonoBehaviour
 {
     public GameObject bin;
+    public AudioSource feedbackAudioSource;
+    public AudioClip[] wrongFeedback;
+    public AudioClip[] correctFeedback;
+    public GameObject dmg;
+    public GameObject aura;
+    public AudioClip dmgSound;
+    public AudioClip correctSound;
 
     // Start is called before the first frame update
     void Start()
@@ -37,12 +44,38 @@ public class TrashBinController : MonoBehaviour
 
             Debug.Log("CORRECT!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints += 1;
+            //feedbackAudioSource.clip = correctSound;
+            //feedbackAudioSource.Play();
+            aura.GetComponent<ParticleSystem>().Play();
+            feedbackAudioSource.clip = correctFeedback[Random.Range(0, correctFeedback.Length)];
+            feedbackAudioSource.Play();
+
         }
         else if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("General") || other.gameObject.CompareTag("Can") || other.gameObject.CompareTag("Glass") || other.gameObject.CompareTag("Paper"))
         {
             Debug.Log("WRONG!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints -= 1;
+            //feedbackAudioSource.clip = dmgSound;
+            //feedbackAudioSource.Play();
+            dmg.GetComponent<ParticleSystem>().Play();
+            feedbackAudioSource.clip = wrongFeedback[Random.Range(0, wrongFeedback.Length)];
+            feedbackAudioSource.Play();
+
+            //ParticleSystem.MainModule main = aura.gameObject.GetComponent<ParticleSystem>().main;
+            //main.startColor = Color.red;
         }
 
     }
+
+    //IEnumerator ExampleCoroutine()
+    //{
+    //    //Print the time of when the function is first called.
+    //    //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+    //    //yield on a new YieldInstruction that waits for 5 seconds.
+    //    yield return new WaitForSeconds(2);
+
+    //    //After we have waited 5 seconds print the time again.
+    //    //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    //}
 }
