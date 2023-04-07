@@ -115,7 +115,7 @@ public class StampManager : MonoBehaviour
             // }
 
             // enable stars based on time
-            for (int i = 0; i < stamp_holders.Length; i++)
+            for (int i = 0; i < stamp_holders.Length-1; i++)
             {
                 if(i <= Scene_no)
                 {
@@ -218,6 +218,11 @@ public class StampManager : MonoBehaviour
         string buttonName = button.name;
         int sceneIndex = int.Parse(buttonName.Substring(buttonName.Length - 1)) -1;
         SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void goToCreditScene()
+    {
+        LoadNextScene();
     }
 
     // Unity event to listen to when the player presses the menu button
