@@ -43,14 +43,16 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!ramen){
                 ramen = true;
-                Destroy(other.gameObject.GetComponent<Rigidbody>());
-                other.gameObject.GetComponent<Collider>().enabled = false;
-                other.gameObject.transform.rotation = Quaternion.identity;
-                // set this position to 0,0,0
-                // other.gameObject.transform.SetParent(ramenTransform.transform,false);
-                other.gameObject.transform.position = ramenTransform.transform.position;
-                other.gameObject.transform.parent = ramenTransform.transform;
-                // other.gameObject.transform.position = new Vector3(0,0,0);
+                instantiateRamenAtRamenTransform(other);
+                // Destroy(other.gameObject.GetComponent<Rigidbody>());
+                // other.gameObject.RemoveComponent<Grabbable>();
+                // other.gameObject.GetComponent<Collider>().enabled = false;
+                // other.gameObject.transform.rotation = Quaternion.identity;
+                // // set this position to 0,0,0
+                // // other.gameObject.transform.SetParent(ramenTransform.transform,false);
+                // // other.gameObject.transform.position = ramenTransform.transform.position;
+                // other.gameObject.transform.parent = ramenTransform;
+                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 
             }
             
@@ -59,12 +61,15 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!soju){
                 soju = true;
-                Destroy(other.gameObject.GetComponent<Rigidbody>());
-                other.gameObject.GetComponent<Collider>().enabled = false;
-                other.gameObject.transform.rotation = Quaternion.identity;
-                // other.gameObject.transform.SetParent(sojuTransform.transform,false);
-                other.gameObject.transform.position = sojuTransform.transform.position;
-                other.gameObject.transform.parent = sojuTransform.transform;
+                instantiateSojuAtSojuTransform(other);
+                // Destroy(other.gameObject.GetComponent<Rigidbody>());
+                // other.gameObject.RemoveComponent<Grabbable>();
+                // other.gameObject.GetComponent<Collider>().enabled = false;
+                // other.gameObject.transform.rotation = Quaternion.identity;
+                // // other.gameObject.transform.SetParent(sojuTransform.transform,false);
+                // // other.gameObject.transform.position = sojuTransform.transform.position;
+                // other.gameObject.transform.parent = sojuTransform;
+                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 // other.gameObject.transform.position = new Vector3(0,0,0);
             }
         }
@@ -72,12 +77,15 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!chips){
                 chips = true;
-                Destroy(other.gameObject.GetComponent<Rigidbody>());
-                other.gameObject.GetComponent<Collider>().enabled = false;
-                other.gameObject.transform.rotation = Quaternion.identity;
-                // other.gameObject.transform.SetParent(chipsTransform.transform,false);
-                other.gameObject.transform.position = chipsTransform.transform.position;
-                other.gameObject.transform.parent = chipsTransform.transform;
+                instantiateChipsAtChipsTransform(other);
+                // Destroy(other.gameObject.GetComponent<Rigidbody>());
+                // other.gameObject.RemoveComponent<Grabbable>();
+                // other.gameObject.GetComponent<Collider>().enabled = false;
+                // other.gameObject.transform.rotation = Quaternion.identity;
+                // // other.gameObject.transform.SetParent(chipsTransform.transform,false);
+                // // other.gameObject.transform.position = chipsTransform.transform.position;
+                // other.gameObject.transform.parent = chipsTransform;
+                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 // other.gameObject.transform.position = new Vector3(0,0,0);
                 
             }
@@ -122,5 +130,42 @@ public class ChecklistManager : MonoBehaviour
         }else{
             return false;
         }
+    }
+
+    void instantiateRamenAtRamenTransform(Collider other){
+        // instantiate ramen at ramenTransform, set parent to ramenTransform
+        GameObject ramen = Instantiate(other.gameObject, ramenTransform.transform.position, Quaternion.identity);
+        ramen.transform.parent = ramenTransform.transform;
+        ramen.transform.position = ramenTransform.transform.position;
+        ramen.transform.rotation = Quaternion.identity;
+        // Remove all scripts component        
+        ramen.GetComponent<Rigidbody>().isKinematic = true;
+        ramen.GetComponent<BoxCollider>().enabled = false;
+        // Destroy original
+        Destroy(other.gameObject);
+    }
+
+    void instantiateSojuAtSojuTransform(Collider other){
+        // instantiate ramen at ramenTransform, set parent to ramenTransform
+        GameObject soju = Instantiate(other.gameObject, sojuTransform.transform.position, Quaternion.identity);
+        soju.transform.parent = sojuTransform.transform;
+        soju.transform.position = sojuTransform.transform.position;
+        soju.transform.rotation = Quaternion.identity;
+        soju.GetComponent<Rigidbody>().isKinematic = true;
+        soju.GetComponent<BoxCollider>().enabled = false;
+        // Destroy original
+        Destroy(other.gameObject);
+    }
+
+    void instantiateChipsAtChipsTransform(Collider other){
+        // instantiate ramen at ramenTransform, set parent to ramenTransform
+        GameObject chips = Instantiate(other.gameObject, chipsTransform.transform.position, Quaternion.identity);
+        chips.transform.parent = chipsTransform.transform;
+        chips.transform.position = chipsTransform.transform.position;
+        chips.transform.rotation = Quaternion.identity;
+        chips.GetComponent<Rigidbody>().isKinematic = true;
+        chips.GetComponent<BoxCollider>().enabled = false;
+        // Destroy original
+        Destroy(other.gameObject);
     }
 }
