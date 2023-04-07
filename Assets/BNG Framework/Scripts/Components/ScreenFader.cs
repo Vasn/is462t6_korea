@@ -109,7 +109,7 @@ namespace BNG {
 
             // Do the fade routine
             if (canvasGroup != null) {
-                fadeRoutine = doFade(canvasGroup.alpha, 1);
+                fadeRoutine = doFade(canvasGroup.alpha,1);
                 StartCoroutine(fadeRoutine);
             }
         }

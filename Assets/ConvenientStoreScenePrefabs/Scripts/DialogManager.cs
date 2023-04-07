@@ -30,13 +30,13 @@ public class DialogManager : MonoBehaviour
         
         // Add left options to the list
         leftOptionsList.Add("");
-        leftOptionsList.Add("Yes");
+        leftOptionsList.Add("");
         leftOptionsList.Add("");
         leftOptionsList.Add("");
 
         // Add right options to the list
         rightOptionsList.Add("Next");
-        rightOptionsList.Add("No");
+        rightOptionsList.Add("Yes");
         rightOptionsList.Add("Card");
         rightOptionsList.Add("");
         
