@@ -6,9 +6,27 @@ using UnityEngine.UI;
 public class Train_StampManager : MonoBehaviour
 {
     // access the StampManager class, get the time variable from this script
+    private bool gameStart = false;
+    private bool trainMoving = false;
+    private bool exitTrain = false;
+
+    // private string hitObject;
+    
+    private Vector3 initialPosition;
+    private GameObject spawn;
+    private GameObject playerControl;
+
+    private GameObject innerLeft;
+    private GameObject innerRight;
+    private GameObject outerLeft;
+    private GameObject outerRight;
+
     public StampManager stampManager;
 
     public AudioClip trainMoveSound;
+
+    public MapPoints mapPoints;
+    public GameObject minimap;
 
     [Tooltip("This holds the audioSource for the train announcements")]
     public AudioSource train_announcer;
@@ -19,40 +37,75 @@ public class Train_StampManager : MonoBehaviour
     void Start()
     {
         // call on the function "PlayAnnouncement". Call when done until stampManager.completed becomes true
-        StartCoroutine(PlayAnnouncement());
-        
+        innerLeft = GameObject.Find("/Subway/Mutable/Subway/TriggerLeft");
+        innerRight = GameObject.Find("/Subway/Mutable/Subway/TriggerRight");
+        outerLeft = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerLeft");
+        outerRight = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerRight");
+        spawn = GameObject.Find("Spawn");
+        playerControl = GameObject.Find("/XR Rig Advanced/PlayerController");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if not playing, set the time variable in StampManager to the time variable in this script
-        if (!train_announcer.isPlaying)
-        {
-            stampManager.time = 0;
+        if (!gameStart){
+            if (GameObject.Find("FloorTwo").activeInHierarchy == true){
+                StartCoroutine(PlayAnnouncement());
+                gameStart = true;
+                stampManager.time=0;
+            } else {
+                Debug.Log("Game has not started");
+            }
         }
     }
     //  play announcements corouting loops through the train_announcements array and plays them with a 5 second gap between each clip
     IEnumerator PlayAnnouncement()
     {
-        while(!stampManager.completed){
-            for (int i = 0; i < train_announcements.Length; i++)
-            {
-                stampManager.time=0;
-                Debug.Log("====Playing announcement====");
-                Debug.Log(train_announcements[i].name);
-                train_announcer.clip = train_announcements[i];
+        for (int i = 0; i < train_announcements.Length; i++)
+        {
+            trainMoving = true;
+            if (trainMoving){
+                train_announcer.clip = trainMoveSound;
                 train_announcer.Play();
-                // wait until the audio clip is finished playing
-                yield return new WaitForSeconds(train_announcer.clip.length+10);
-                
+                SetDoorManagerComponentsEnabled(false);
+                Debug.Log("====Train Moving====");
+                yield return new WaitForSeconds (5);
             }
-        }
+            Debug.Log("====Playing announcement====");
+            Debug.Log(train_announcements[i].name);
+            train_announcer.clip = train_announcements[i];
+            train_announcer.Play();
+            mapPoints.ChangeLights(train_announcements[i].name.ToString());
+            
+            trainMoving = false;
+            SetDoorManagerComponentsEnabled(true);
+            // wait until the audio clip is finished playing
+            yield return new WaitForSeconds(train_announcer.clip.length+5);
+            }
+        
+
+    }
+
+    IEnumerator Delay()
+    {
+        stampManager.time += 10;
+        yield return new WaitForSeconds(2);
+        Debug.Log("Time added 10.");
     }
 
     void OnTriggerEnter(Collider other){
         // if the object of this script collides with box with "scoreZone" tag, stop timer and change "completed" in StampManager to true
-        if(other.gameObject.tag == "scoreZone"){
+        // hitObject = other.gameObject.tag;
+        // Debug.Log(hitObject);        
+        if(other.gameObject.CompareTag("scoreZone")){
+            Debug.Log("Reached scorezone, filter to next stage.");
+            stampManager.completed = true;
+            stampManager.setComplete();
+        }
+        if(other.gameObject.CompareTag("Exit")){
+            Debug.Log("------====== Reached exit, filter to next stage.");
+            exitTrain = true;
+            SetDoorManagerComponentsEnabled(false);
             Debug.Log($"This is the clip: {train_announcer.clip.name}");
             // if the audio clip playing currently is the 2nd one, the scene is completed
             if(train_announcer.clip == train_announcements[1]){
@@ -62,12 +115,32 @@ public class Train_StampManager : MonoBehaviour
             }
         }
 
+            if(train_announcer.clip != train_announcements[1]){
+                Debug.Log("Incorrect station, add 10 seconds to timer.");
+                Vector3 position = spawn.transform.position;
+                Debug.Log(position);
+                playerControl.transform.position = position;
+                StartCoroutine(Delay());
+            } else {
+                Debug.Log("Correct station, proceed with caution.");
+                train_announcer.Stop();
+                StopCoroutine(PlayAnnouncement());
+                train_announcer.volume=0;
+                train_announcer.mute=true;
+                minimap.SetActive(false);
+            }            
+        }    
     }
 
     void OnCollisionEnter(Collision other){
-        // IF other is tagged "zombie", add 10s to stampManager.time
-        if(other.gameObject.tag == "Zombie"){
-            stampManager.time += 10;
+    // IF other is tagged "zombie", add 10s to stampManager.time
+    // hitObject = other.gameObject.tag;
+    // Debug.Log(hitObject);
+        if(other.gameObject.tag == "zombie"){
+            // train_announcer.clip = monsterTrigger;
+            // train_announcer.Play();
+            Debug.Log("Hit by zombie.");
+            StartCoroutine(Delay());
         }
     }
 

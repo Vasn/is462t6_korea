@@ -20,6 +20,7 @@ TagManager:
   - Exit
   - zombie
   - NPCs
+  - Head
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,6 @@ TagManager:
   - Tongs
   - Glow
   - LayerToDetect
-  - 
   - 
   - 
   - 
