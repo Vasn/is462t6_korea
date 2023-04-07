@@ -43,12 +43,22 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!ramen){
                 ramen = true;
+<<<<<<< Updated upstream
                 other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
                 other.gameObject.transform.position = ramenTransform.position;
                 // destroy rigidbody and collider
+=======
+>>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
+                other.gameObject.transform.rotation = Quaternion.identity;
+                // set this position to 0,0,0
+                // other.gameObject.transform.SetParent(ramenTransform.transform,false);
+                other.gameObject.transform.position = ramenTransform.transform.position;
+                other.gameObject.transform.parent = ramenTransform.transform;
+                // other.gameObject.transform.position = new Vector3(0,0,0);
+                
             }
             
         }
@@ -56,22 +66,39 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!soju){
                 soju = true;
+<<<<<<< Updated upstream
                 other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
                 other.gameObject.transform.position = sojuTransform.position;
+=======
+>>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
+                other.gameObject.transform.rotation = Quaternion.identity;
+                // other.gameObject.transform.SetParent(sojuTransform.transform,false);
+                other.gameObject.transform.position = sojuTransform.transform.position;
+                other.gameObject.transform.parent = sojuTransform.transform;
+                // other.gameObject.transform.position = new Vector3(0,0,0);
             }
         }
         if (other.gameObject.tag == "Chips")
         {
             if(!chips){
                 chips = true;
+<<<<<<< Updated upstream
                 other.gameObject.transform.SetParent(this.transform);
                 other.gameObject.transform.rotation = Quaternion.identity;
                 other.gameObject.transform.position = chipsTransform.position;
+=======
+>>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
+                other.gameObject.transform.rotation = Quaternion.identity;
+                // other.gameObject.transform.SetParent(chipsTransform.transform,false);
+                other.gameObject.transform.position = chipsTransform.transform.position;
+                other.gameObject.transform.parent = chipsTransform.transform;
+                // other.gameObject.transform.position = new Vector3(0,0,0);
+                
             }
         }
 
