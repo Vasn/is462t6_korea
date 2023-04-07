@@ -45,7 +45,7 @@ public class BBQSceneManager : MonoBehaviour
         {
             if (firstAmount.GetComponent<UnityEngine.UI.Text>().text == "0")
             {
-                if (fourthAmount.GetComponent<UnityEngine.UI.Text>().text == "5")
+                if (fourthAmount.GetComponent<UnityEngine.UI.Text>().text == "1")
                 {
                     score += 1;
                 }
