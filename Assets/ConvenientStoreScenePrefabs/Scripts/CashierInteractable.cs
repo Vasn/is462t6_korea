@@ -95,12 +95,11 @@ public class CashierInteractable : MonoBehaviour
         BAudioSource = BGMAudioSource.GetComponent<AudioSource>() as AudioSource;
         Debug.Log("BAudioSource: " + BAudioSource);
         // Pause BGM
-        BAudioSource.enabled = false;
+        BAudioSource.volume = 0.0f;
         CashierAnimator.runtimeAnimatorController = CashierTalk as RuntimeAnimatorController;
         // Play Cashier Audio Once
-        audioSource.PlayOneShot(audioSource.clip);
-        // Resume BGM
-        BAudioSource.enabled = true;
+        audioSource.PlayOneShot(audioSource.clip, 1.5f);
+        
 
         // Track whne audio is done playing
         StartCoroutine(WaitForAudio());
@@ -113,6 +112,7 @@ public class CashierInteractable : MonoBehaviour
             yield return null;
         }
         CashierAnimator.runtimeAnimatorController = CashierIdle as RuntimeAnimatorController;
+        BAudioSource.volume = 0.2f;
     }
 
     private void checkEligible()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class StampManager : MonoBehaviour
 {
@@ -50,15 +51,26 @@ public class StampManager : MonoBehaviour
     public float time;
     private float minutes;
     private float seconds;
+
+    //filepaths for scene management - we will load from build settings in same sequence
+    private string[] scenePaths;
+    private static int currentSceneIndex;
     
     // Start is called before the first frame update
     void Start()
     {
+        // initialise scene paths and set index
+        scenePaths = new string[SceneManager.sceneCountInBuildSettings];
+        for (int i = 0; i < scenePaths.Length; i++)
+        {
+            scenePaths[i] = SceneUtility.GetScenePathByBuildIndex(i);
+        }
+        LogAllScenes();
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         // if scores_placeholder has elements inside, assign static scores with this value
         if(scores_placeholder.Count > 0){
             scores = scores_placeholder;
-            
         }
 
         // initialise image list to be all the images for the different stars
@@ -67,7 +79,11 @@ public class StampManager : MonoBehaviour
         // disable scoreboard and all the stars
         scoreboard.SetActive(false);
         completed=false;
-        Scene_no = scores.Count;
+        Scene_no = currentSceneIndex;
+
+        // For testing purposes
+        // Coroutine to wait 5 seconds and transition to next scene
+        // StartCoroutine(TransitionToNextScene());
 
     }
 
@@ -81,17 +97,15 @@ public class StampManager : MonoBehaviour
             scoreboard.GetComponent<Renderer>().material.mainTexture = scene_backgrounds[Scene_no];
             
             // Update the score array
-            int new_score = time<threestartime?3:time<twostartime?2:1;
-            for(int i = Scene_no - scores.Count+1; i > 0; i--)
-            {
-                scores.Add(new_score);
-            }
+            // int new_score = time<threestartime?3:time<twostartime?2:1;
+            // for(int i = Scene_no - scores.Count+1; i > 0; i--)
+            // {
+            //     scores.Add(new_score);
+            // }
+
             // enable stars based on time
             for (int i = 0; i < stamp_holders.Length; i++)
             {
-                // if(Scene_no==0){
-                //     stamp_holders[i].enabled = false;
-                // }
                 if(i <= Scene_no)
                 {
                     stamp_holders[i].enabled = true;
@@ -122,6 +136,8 @@ public class StampManager : MonoBehaviour
     }
 
     public void setComplete(){
+        int new_score = time<threestartime?3:time<twostartime?2:1;
+        setStars(new_score);
         completed = true;
     }
 
@@ -134,4 +150,58 @@ public class StampManager : MonoBehaviour
         }
 
     }
+
+    public void setStars(int stars){
+        scores[Scene_no] = stars;
+        setComplete();
+    }
+
+    void LogAllScenes()
+    {
+        Debug.Log("All scenes in build:");
+        for (int i = 0; i < scenePaths.Length; i++)
+        {
+            Debug.Log(scenePaths[i]);
+        }
+    }
+
+    public void LoadNextScene()
+    {
+        if (currentSceneIndex < scenePaths.Length - 1)
+        {
+            currentSceneIndex++;
+            SceneManager.LoadScene(currentSceneIndex);
+        }
+        else
+        {
+            Debug.Log("No more next scenes to load");
+        }
+    }
+
+    public void LoadPreviousScene()
+    {
+        if (currentSceneIndex > 0)
+        {
+            currentSceneIndex--;
+            SceneManager.LoadScene(currentSceneIndex);
+        }
+        else
+        {
+            Debug.Log("No more previous scenes to load");
+        }
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    // IEnumerator TransitionToNextScene()
+    // {
+    //     yield return new WaitForSeconds(5);
+    //     LoadNextScene();
+    // }
+
 }
+
+

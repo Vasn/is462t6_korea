@@ -9,7 +9,7 @@ public class CheckoutAreaManager : MonoBehaviour
     private bool basketDown = false;
     private GameObject newBasket;
     public GameObject plasticBag;
-    
+
     public void placeBasket()
     {
         if (basketDown == true || newBasket != null)
@@ -29,7 +29,8 @@ public class CheckoutAreaManager : MonoBehaviour
         checklist.SetActive(false);
 
         // Get center of basket
-        Vector3 basketCenter = newBasket.GetComponent<Renderer>().bounds.center;
+        // Vector3 basketCenter = newBasket.GetComponent<Renderer>().bounds.center;
+        Vector3 basketCenter = newBasket.transform.position;
         // Put all children of original basket into new basket
         foreach (Transform child in basket.transform)
         {
@@ -131,4 +132,5 @@ public class CheckoutAreaManager : MonoBehaviour
         // Destroy the basket
         removeBasket();
     }
+
 }
