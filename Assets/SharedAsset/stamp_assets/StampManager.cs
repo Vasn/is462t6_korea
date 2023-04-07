@@ -115,7 +115,7 @@ public class StampManager : MonoBehaviour
             // }
 
             // enable stars based on time
-            for (int i = 0; i < stamp_holders.Length-1; i++)
+            for (int i = 0; i < stamp_holders.Length; i++)
             {
                 if(i <= Scene_no)
                 {
