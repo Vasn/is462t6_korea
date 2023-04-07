@@ -76,8 +76,6 @@ public class CookingScript : MonoBehaviour
     void OnCollisionExit(Collision collision){
         print("no longer cookin");
         isColliding = false;
-        MeatReadyMsg.SetActive(false);
-        MeatBurntMsg.SetActive(true);
     }
 
     void UpdateCookingStage(){
