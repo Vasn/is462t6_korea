@@ -76,6 +76,13 @@ public class CookingScript : MonoBehaviour
         print("no longer cookin");
         isColliding = false;
         audioSource.Stop();
+        // if meatreadymsgprefab is instantiated, destroy it
+        if(MeatReadyMsgPrefab != null){
+            Destroy(MeatReadyMsgPrefab);
+        }
+        if(MeatReadyMsgPrefab != null){
+            Destroy(MeatBurntMsgPrefab);
+        }
     }
 
     void UpdateCookingStage(){
@@ -86,11 +93,15 @@ public class CookingScript : MonoBehaviour
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) - 1).ToString();
             // MeatReadyMsg.SetActive(false);
             // MeatBurntMsg.SetActive(true);
-            Destroy(MeatReadyMsgPrefab, 0);
+           
             Instantiate(MeatBurntMsgPrefab, transform.position, Quaternion.identity);
+            // rotate the prefab 180 degrees
+            MeatBurntMsgPrefab.transform.Rotate(0, 180, 0);
+            
             
             // MeatBurntMsg.SetActive(false);
-            Destroy(MeatBurntMsgPrefab, 5);
+            
+            
         }
         else if(timer > 5 && cookingStage == 0){
             cookingStage = 1;
@@ -100,8 +111,11 @@ public class CookingScript : MonoBehaviour
             // alert for meat is ready
             // MeatReadyMsg.SetActive(true);
             Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
+            // rotate the prefab 180 degrees
+            MeatReadyMsgPrefab.transform.Rotate(0, 180, 0);
             audioSource.clip = meatReadySound;
             audioSource.Play();
+            
         }
     }
 
