@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/BNG Framework/Scenes/XR Demo.unity
     guid: a1360534006d3f845bc79b46b93cfec5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ConvenientStoreScene.unity
     guid: a4c6c8ae366b46148bdd6cfb514c663a
   - enabled: 1

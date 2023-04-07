@@ -16,6 +16,17 @@ public class CookingScript : MonoBehaviour
     int cookingStage = 0;
     public float timer = 0f;
 
+    // burnt meat popup
+    public GameObject MeatReadyMsgPrefab; // to create these prefabs and follow bacon
+    public GameObject MeatBurntMsgPrefab; // to create these prefabs and follow bacon
+    public GameObject bacon;
+    public AudioSource audioSource;
+    public AudioClip meatSizzleSound;
+    public AudioClip meatReadySound;
+
+    // for arrow guide check
+    private bool firstGrab = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +56,18 @@ public class CookingScript : MonoBehaviour
         {
             // change meshrenderer's second material to materials[0]
             isColliding = true;
+
+            // sizzle sound only if uncooked
+            if(cookingStage == 0){
+                audioSource.clip = meatSizzleSound;
+                audioSource.Play();
+            }
+
+            // update arrow guide
+            if(!firstGrab){
+                arrowGuideManager.tutorialStage=3;
+                firstGrab = true;
+            }
         }
 
     }
@@ -52,6 +75,7 @@ public class CookingScript : MonoBehaviour
     void OnCollisionExit(Collision collision){
         print("no longer cookin");
         isColliding = false;
+        audioSource.Stop();
     }
 
     void UpdateCookingStage(){
@@ -60,11 +84,24 @@ public class CookingScript : MonoBehaviour
             ChangeColor(burn);
             burnAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(burnAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) - 1).ToString();
+            // MeatReadyMsg.SetActive(false);
+            // MeatBurntMsg.SetActive(true);
+            Destroy(MeatReadyMsgPrefab, 0);
+            Instantiate(MeatBurntMsgPrefab, transform.position, Quaternion.identity);
+            
+            // MeatBurntMsg.SetActive(false);
+            Destroy(MeatBurntMsgPrefab, 5);
         }
         else if(timer > 5 && cookingStage == 0){
             cookingStage = 1;
             ChangeColor(cook);
             cookAmount.GetComponent<UnityEngine.UI.Text>().text = (int.Parse(cookAmount.GetComponent<UnityEngine.UI.Text>().text) + 1).ToString();
+
+            // alert for meat is ready
+            // MeatReadyMsg.SetActive(true);
+            Instantiate(MeatReadyMsgPrefab, transform.position, Quaternion.identity);
+            audioSource.clip = meatReadySound;
+            audioSource.Play();
         }
     }
 

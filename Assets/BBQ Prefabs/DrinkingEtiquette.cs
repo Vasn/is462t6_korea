@@ -9,6 +9,14 @@ using UnityEngine;
         public GameObject correctDrinkingAmount;
         float totalTime = 0.0f;
         float correctTime = 0.0f;
+
+        // sound effect
+		public AudioSource audioSource;
+    	public AudioClip drinkingSound;
+
+        // error message
+        public GameObject errorMsg;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -23,9 +31,15 @@ using UnityEngine;
                 totalTime += Time.deltaTime;
                 if (transform.eulerAngles.y > 135 && transform.eulerAngles.y < 225) {
                     // play animation
+
+                    audioSource.clip = drinkingSound;
+                    audioSource.Play();
+                    errorMsg.SetActive(false);
                 }
                 else {
                     correctTime += Time.deltaTime;
+                    // display error
+                    errorMsg.SetActive(true);
                 }
                 int percentage = (int)(((correctTime % 60) / (totalTime % 60)) * 100);
                 correctDrinkingAmount.GetComponent<UnityEngine.UI.Text>().text = (percentage).ToString();
