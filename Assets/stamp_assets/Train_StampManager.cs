@@ -61,27 +61,29 @@ public class Train_StampManager : MonoBehaviour
     //  play announcements corouting loops through the train_announcements array and plays them with a 5 second gap between each clip
     IEnumerator PlayAnnouncement()
     {
-        for (int i = 0; i < train_announcements.Length; i++)
-        {
-            trainMoving = true;
-            if (trainMoving){
-                train_announcer.clip = trainMoveSound;
+        while(!exitTrain){
+            for (int i = 0; i < train_announcements.Length; i++)
+            {
+                trainMoving = true;
+                if (trainMoving){
+                    train_announcer.clip = trainMoveSound;
+                    train_announcer.Play();
+                    SetDoorManagerComponentsEnabled(false);
+                    Debug.Log("====Train Moving====");
+                    yield return new WaitForSeconds (5);
+                }
+                Debug.Log("====Playing announcement====");
+                Debug.Log(train_announcements[i].name);
+                train_announcer.clip = train_announcements[i];
                 train_announcer.Play();
-                SetDoorManagerComponentsEnabled(false);
-                Debug.Log("====Train Moving====");
-                yield return new WaitForSeconds (5);
+                mapPoints.ChangeLights(train_announcements[i].name.ToString());
+                
+                trainMoving = false;
+                SetDoorManagerComponentsEnabled(true);
+                // wait until the audio clip is finished playing
+                yield return new WaitForSeconds(train_announcer.clip.length+5);
             }
-            Debug.Log("====Playing announcement====");
-            Debug.Log(train_announcements[i].name);
-            train_announcer.clip = train_announcements[i];
-            train_announcer.Play();
-            mapPoints.ChangeLights(train_announcements[i].name.ToString());
-            
-            trainMoving = false;
-            SetDoorManagerComponentsEnabled(true);
-            // wait until the audio clip is finished playing
-            yield return new WaitForSeconds(train_announcer.clip.length+5);
-            }
+        }
         
 
     }
