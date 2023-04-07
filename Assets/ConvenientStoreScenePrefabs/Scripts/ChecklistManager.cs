@@ -43,13 +43,6 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!ramen){
                 ramen = true;
-<<<<<<< Updated upstream
-                other.gameObject.transform.SetParent(this.transform);
-                other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = ramenTransform.position;
-                // destroy rigidbody and collider
-=======
->>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
                 other.gameObject.transform.rotation = Quaternion.identity;
@@ -66,12 +59,6 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!soju){
                 soju = true;
-<<<<<<< Updated upstream
-                other.gameObject.transform.SetParent(this.transform);
-                other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = sojuTransform.position;
-=======
->>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
                 other.gameObject.transform.rotation = Quaternion.identity;
@@ -85,12 +72,6 @@ public class ChecklistManager : MonoBehaviour
         {
             if(!chips){
                 chips = true;
-<<<<<<< Updated upstream
-                other.gameObject.transform.SetParent(this.transform);
-                other.gameObject.transform.rotation = Quaternion.identity;
-                other.gameObject.transform.position = chipsTransform.position;
-=======
->>>>>>> Stashed changes
                 Destroy(other.gameObject.GetComponent<Rigidbody>());
                 other.gameObject.GetComponent<Collider>().enabled = false;
                 other.gameObject.transform.rotation = Quaternion.identity;
