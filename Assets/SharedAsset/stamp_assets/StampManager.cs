@@ -154,6 +154,7 @@ public class StampManager : MonoBehaviour
 
     public void setComplete(){
         int new_score = time<threestartime?3:time<twostartime?2:1;
+        scores[Scene_no] = new_score;
         completed = true;
     }
 

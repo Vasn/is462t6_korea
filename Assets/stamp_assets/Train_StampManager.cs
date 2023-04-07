@@ -100,6 +100,7 @@ public class Train_StampManager : MonoBehaviour
         if(other.gameObject.CompareTag("scoreZone")){
             Debug.Log("Reached scorezone, filter to next stage.");
             stampManager.completed = true;
+            stampManager.setComplete();
         }
         if(other.gameObject.CompareTag("Exit")){
             Debug.Log("------====== Reached exit, filter to next stage.");

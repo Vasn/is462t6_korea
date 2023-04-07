@@ -6,8 +6,8 @@ public class ZombieManager : MonoBehaviour
 {
     public AudioClip backgroundSound;
     public AudioClip collisionSound;
-    public float minBackgroundInterval = 3f;
-    public float maxBackgroundInterval = 10f;
+    public float minBackgroundInterval = 10f;
+    public float maxBackgroundInterval = 20f;
 
     private AudioSource audioSource;
 
