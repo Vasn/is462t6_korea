@@ -77,6 +77,8 @@ public class ScoreBoardController : MonoBehaviour
 
         btnText.text = "Restart!";
         btn.SetActive(true);
+        startPoints+=1;
+        // Debug.Log(Mathf.Min(startPoints/4,3));
 
         stampManagerObject.GetComponent<StampManager>().setStars(Mathf.Min(startPoints/4,3));
         Debug.Log("GAME IS OVER!");
