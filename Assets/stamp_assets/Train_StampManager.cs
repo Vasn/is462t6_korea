@@ -6,6 +6,20 @@ using UnityEngine.UI;
 public class Train_StampManager : MonoBehaviour
 {
     // access the StampManager class, get the time variable from this script
+    private bool gameStart = false;
+    private bool trainMoving = false;
+    private bool exitTrain = false;
+
+    // private string hitObject;
+    
+    private Vector3 initialPosition;
+    private Transform parentTransform;
+
+    public GameObject innerLeft;
+    public GameObject innerRight;
+    public GameObject outerLeft;
+    public GameObject outerRight;
+
     public StampManager stampManager;
 
     public AudioClip trainMoveSound;
@@ -19,57 +33,102 @@ public class Train_StampManager : MonoBehaviour
     void Start()
     {
         // call on the function "PlayAnnouncement". Call when done until stampManager.completed becomes true
-        StartCoroutine(PlayAnnouncement());
-        
+        innerLeft = GameObject.Find("/Subway/Mutable/Subway/TriggerLeft");
+        innerRight = GameObject.Find("/Subway/Mutable/Subway/TriggerRight");
+        outerLeft = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerLeft");
+        outerRight = GameObject.Find("/TrainStationDoor/OpenDoor/TriggerRight");
+        parentTransform = transform.parent.transform;
+        initialPosition = parentTransform.position;
+        stampManager.time=0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if not playing, set the time variable in StampManager to the time variable in this script
-        if (!train_announcer.isPlaying)
-        {
-            stampManager.time = 0;
+        if (!gameStart){
+            if (GameObject.Find("FloorTwo").activeInHierarchy == true){
+                StartCoroutine(PlayAnnouncement());
+                gameStart = true;
+            }
         }
     }
     //  play announcements corouting loops through the train_announcements array and plays them with a 5 second gap between each clip
     IEnumerator PlayAnnouncement()
     {
-        while(!stampManager.completed){
+        while(!exitTrain){
             for (int i = 0; i < train_announcements.Length; i++)
             {
-                stampManager.time=0;
+                trainMoving = true;
+                if (trainMoving){
+                    train_announcer.clip = trainMoveSound;
+                    train_announcer.Play();
+                    SetDoorManagerComponentsEnabled(false);
+                    Debug.Log("====Train Moving====");
+                    yield return new WaitForSeconds (5);
+                }
                 Debug.Log("====Playing announcement====");
                 Debug.Log(train_announcements[i].name);
                 train_announcer.clip = train_announcements[i];
                 train_announcer.Play();
+                trainMoving = false;
+                SetDoorManagerComponentsEnabled(true);
                 // wait until the audio clip is finished playing
-                yield return new WaitForSeconds(train_announcer.clip.length+10);
-                
+                yield return new WaitForSeconds(train_announcer.clip.length+5);
+            }
+            if (exitTrain){
+                break;
             }
         }
+
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        stampManager.time += 10;
+        Debug.Log("Time added 10.");
     }
 
     void OnTriggerEnter(Collider other){
         // if the object of this script collides with box with "scoreZone" tag, stop timer and change "completed" in StampManager to true
-        if(other.gameObject.tag == "scoreZone"){
-            Debug.Log($"This is the clip: {train_announcer.clip.name}");
-            // if the audio clip playing currently is the 2nd one, the scene is completed
-            if(train_announcer.clip == train_announcements[1]){
-                stampManager.completed = true;
-            }else{
-                Debug.Log("This is not the right stop bro");
-            }
+        // hitObject = other.gameObject.tag;
+        // Debug.Log(hitObject);        
+        if(other.gameObject.CompareTag("scoreZone")){
+            Debug.Log("Reached scorezone, filter to next stage.");
+            stampManager.completed = true;
         }
+        if(other.gameObject.CompareTag("Exit")){
+            exitTrain = true;
+            SetDoorManagerComponentsEnabled(false);
+            Debug.Log($"This is the clip: {train_announcer.clip.name}");
 
+            if(train_announcer.clip != train_announcements[1]){
+                Debug.Log("Incorrect station, add 10 seconds to timer.");
+                Debug.Log(initialPosition);
+                parentTransform.position = initialPosition;
+                StartCoroutine(Delay());
+            } else {
+                Debug.Log("Correct station, proceed with caution.");
+                train_announcer.Stop();
+            }            
+        }    
     }
 
     void OnCollisionEnter(Collision other){
-        // IF other is tagged "zombie", add 10s to stampManager.time
-        if(other.gameObject.tag == "Zombie"){
-            stampManager.time += 10;
+    // IF other is tagged "zombie", add 10s to stampManager.time
+    // hitObject = other.gameObject.tag;
+    // Debug.Log(hitObject);
+        if(other.gameObject.tag == "zombie"){
+            Debug.Log("Hit by zombie.");
+            StartCoroutine(Delay());
         }
     }
 
-
+    private void SetDoorManagerComponentsEnabled(bool isEnabled)
+    {
+        innerLeft.GetComponent<DoorManager>().enabled = isEnabled;
+        innerRight.GetComponent<DoorManager>().enabled = isEnabled;
+        outerLeft.GetComponent<DoorManager>().enabled = isEnabled;
+        outerRight.GetComponent<DoorManager>().enabled = isEnabled;
+    }
 }
