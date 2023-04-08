@@ -32,7 +32,9 @@ public class Train_StampManager : MonoBehaviour
     public AudioSource train_announcer;
     [Tooltip("This holds the announcement MP3 files")]
     public AudioClip[] train_announcements;
-    
+
+    // public bool button_hit=false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,15 +50,23 @@ public class Train_StampManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameStart){
-            if (GameObject.Find("FloorTwo").activeInHierarchy == true){
-                gameStart = true;
-                stampManager.time=0;
-                StartCoroutine(PlayAnnouncement());
-            } else {
-                Debug.Log("Game has not started");
-            }
+        // if (!gameStart){
+        //     if (GameObject.Find("FloorTwo").activeInHierarchy == true){
+        //         gameStart = true;
+        //         stampManager.time=0;
+        //         StartCoroutine(PlayAnnouncement());
+        //     } else {
+        //         Debug.Log("Game has not started");
+        //     }
+        // }
+
+        if(gameStart){
+            Debug.Log("Button hit");
+            stampManager.time=0;
+            StartCoroutine(PlayAnnouncement());
+            gameStart = false;
         }
+
     }
     //  play announcements corouting loops through the train_announcements array and plays them with a 5 second gap between each clip
     IEnumerator PlayAnnouncement()
@@ -126,6 +136,10 @@ public class Train_StampManager : MonoBehaviour
                 minimap.SetActive(false);
             }            
         }
+    }
+
+    public void setStart(){
+        gameStart = true;
     }
 
     void OnCollisionEnter(Collision other){
