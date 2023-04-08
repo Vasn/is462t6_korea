@@ -19,6 +19,9 @@ public class ChecklistManager : MonoBehaviour
     public Transform sojuTransform;
     public Transform chipsTransform;
 
+    public AudioClip correct;
+    public AudioSource chime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,7 @@ public class ChecklistManager : MonoBehaviour
                 // // other.gameObject.transform.position = ramenTransform.transform.position;
                 // other.gameObject.transform.parent = ramenTransform;
                 // other.gameObject.transform.localPosition = new Vector3(0,0,0);
+                chime.PlayOneShot(correct);
                 
             }
             
@@ -71,6 +75,7 @@ public class ChecklistManager : MonoBehaviour
                 // other.gameObject.transform.parent = sojuTransform;
                 // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 // other.gameObject.transform.position = new Vector3(0,0,0);
+                chime.PlayOneShot(correct);
             }
         }
         if (other.gameObject.tag == "Chips")
@@ -87,6 +92,7 @@ public class ChecklistManager : MonoBehaviour
                 // other.gameObject.transform.parent = chipsTransform;
                 // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 // other.gameObject.transform.position = new Vector3(0,0,0);
+                chime.PlayOneShot(correct);
                 
             }
         }
