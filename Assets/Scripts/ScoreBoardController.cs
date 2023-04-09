@@ -88,7 +88,7 @@ public class ScoreBoardController : MonoBehaviour
         startPoints+=1;
         // Debug.Log(Mathf.Min(startPoints/4,3));
 
-        stampManagerObject.GetComponent<StampManager>().setStars(Mathf.Min(startPoints/4,3));
+        stampManagerObject.GetComponent<StampManager>().setStars(Mathf.Min(Mathf.Max(1,startPoints/4),3));
         Debug.Log("GAME IS OVER!");
     }
 }

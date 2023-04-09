@@ -101,6 +101,7 @@ public class StampManager : MonoBehaviour
         scores[Scene_no] = new_score;
         Debug.Log("Scene_no: " + Scene_no + " new_score: " + new_score);
         completed = true;
+        started = false;
     }
 
     public void StopWatchCalc(){

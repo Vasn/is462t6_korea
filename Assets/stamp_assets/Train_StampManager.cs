@@ -62,7 +62,7 @@ public class Train_StampManager : MonoBehaviour
 
         if(gameStart){
             Debug.Log("Button hit");
-            stampManager.time=0;
+            // stampManager.time=0;
             StartCoroutine(PlayAnnouncement());
             gameStart = false;
         }
@@ -111,7 +111,7 @@ public class Train_StampManager : MonoBehaviour
         // Debug.Log(hitObject);        
         if(other.gameObject.CompareTag("scoreZone")){
             Debug.Log("Reached scorezone, filter to next stage.");
-            stampManager.completed = true;
+            // stampManager.completed = true;
             stampManager.setComplete();
         }
         if(other.gameObject.CompareTag("Exit")){
