@@ -26,7 +26,7 @@ public class BBQSceneManager : MonoBehaviour
     void Update()
     {
         // Countdown from 2 minutes
-        timer.GetComponent<UnityEngine.UI.Text>().text = (90 - Time.timeSinceLevelLoad).ToString("F0");
+        timer.GetComponent<UnityEngine.UI.Text>().text = (60 - Time.timeSinceLevelLoad).ToString("F0");
         if (timer.GetComponent<UnityEngine.UI.Text>().text == "0")
         {
             // Game over
