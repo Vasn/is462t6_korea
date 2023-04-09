@@ -73,16 +73,18 @@ public class CookingScript : MonoBehaviour
 
     }
 
+
+
     void OnCollisionExit(Collision collision){
         print("no longer cookin");
         isColliding = false;
         audioSource.Stop();
-        // if meatreadymsgprefab is instantiated, destroy it
-        if (meatBurntMsg != null){
+        // if meatreadymsgprefab is instantiated as a clone, destroy it
+        if(meatReadyMsg != null){
             meatBurntMsg.SetActive(false);
         }
-        if (meatReadyMsg != null){
-            meatReadyMsg.SetActive(false);
+        if(meatBurntMsg != null){
+            meatBurntMsg.SetActive(false);
         }
         
     }
