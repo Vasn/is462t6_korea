@@ -47,15 +47,6 @@ public class ChecklistManager : MonoBehaviour
             if(!ramen){
                 ramen = true;
                 instantiateRamenAtRamenTransform(other);
-                // Destroy(other.gameObject.GetComponent<Rigidbody>());
-                // other.gameObject.RemoveComponent<Grabbable>();
-                // other.gameObject.GetComponent<Collider>().enabled = false;
-                // other.gameObject.transform.rotation = Quaternion.identity;
-                // // set this position to 0,0,0
-                // // other.gameObject.transform.SetParent(ramenTransform.transform,false);
-                // // other.gameObject.transform.position = ramenTransform.transform.position;
-                // other.gameObject.transform.parent = ramenTransform;
-                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
                 chime.PlayOneShot(correct);
                 
             }
@@ -66,15 +57,6 @@ public class ChecklistManager : MonoBehaviour
             if(!soju){
                 soju = true;
                 instantiateSojuAtSojuTransform(other);
-                // Destroy(other.gameObject.GetComponent<Rigidbody>());
-                // other.gameObject.RemoveComponent<Grabbable>();
-                // other.gameObject.GetComponent<Collider>().enabled = false;
-                // other.gameObject.transform.rotation = Quaternion.identity;
-                // // other.gameObject.transform.SetParent(sojuTransform.transform,false);
-                // // other.gameObject.transform.position = sojuTransform.transform.position;
-                // other.gameObject.transform.parent = sojuTransform;
-                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
-                // other.gameObject.transform.position = new Vector3(0,0,0);
                 chime.PlayOneShot(correct);
             }
         }
@@ -83,15 +65,6 @@ public class ChecklistManager : MonoBehaviour
             if(!chips){
                 chips = true;
                 instantiateChipsAtChipsTransform(other);
-                // Destroy(other.gameObject.GetComponent<Rigidbody>());
-                // other.gameObject.RemoveComponent<Grabbable>();
-                // other.gameObject.GetComponent<Collider>().enabled = false;
-                // other.gameObject.transform.rotation = Quaternion.identity;
-                // // other.gameObject.transform.SetParent(chipsTransform.transform,false);
-                // // other.gameObject.transform.position = chipsTransform.transform.position;
-                // other.gameObject.transform.parent = chipsTransform;
-                // other.gameObject.transform.localPosition = new Vector3(0,0,0);
-                // other.gameObject.transform.position = new Vector3(0,0,0);
                 chime.PlayOneShot(correct);
                 
             }
@@ -126,8 +99,7 @@ public class ChecklistManager : MonoBehaviour
         checklistText.text = compiled.Replace("\n", Environment.NewLine);
 
         Debug.Log("Ramen: " + ramen + " Soju: " + soju + " Chips: " + chips);
-       
-        
+
     }
 
     public bool getCheckoutEligibility(){
@@ -141,6 +113,7 @@ public class ChecklistManager : MonoBehaviour
     void instantiateRamenAtRamenTransform(Collider other){
         // instantiate ramen at ramenTransform, set parent to ramenTransform
         GameObject ramen = Instantiate(other.gameObject, ramenTransform.transform.position, Quaternion.identity);
+        // Copy rotation
         ramen.transform.parent = ramenTransform.transform;
         ramen.transform.position = ramenTransform.transform.position;
         ramen.transform.rotation = Quaternion.identity;

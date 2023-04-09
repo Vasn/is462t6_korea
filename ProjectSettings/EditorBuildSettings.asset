@@ -9,10 +9,13 @@ EditorBuildSettings:
     path: Assets/BNG Framework/Scenes/XR Demo.unity
     guid: a1360534006d3f845bc79b46b93cfec5
   - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 8327a827eca0744b4a2d61ebe625be9c
+  - enabled: 1
     path: Assets/Scenes/SubwayScene.unity
     guid: 72ccd7eacdadd4bb499ca1a31bd20361
   - enabled: 1
-    path: Assets/Scenes/ConvenientStoreScene.unity
+    path: Assets/ConvenientStoreScenePrefabs/StableVer/ConvenientStoreScene.unity
     guid: a4c6c8ae366b46148bdd6cfb514c663a
   - enabled: 1
     path: Assets/Scenes/BBQScene.unity
