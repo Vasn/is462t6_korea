@@ -77,6 +77,7 @@ public class Train_StampManager : MonoBehaviour
                 trainMoving = true;
                 if (trainMoving){
                     train_announcer.clip = trainMoveSound;
+                    train_announcer.volume = 0.7f;
                     train_announcer.Play();
                     SetDoorManagerComponentsEnabled(false);
                     Debug.Log("====Train Moving====");
@@ -131,7 +132,7 @@ public class Train_StampManager : MonoBehaviour
                 Debug.Log("Correct station, proceed with caution.");
                 train_announcer.Stop();
                 StopCoroutine(PlayAnnouncement());
-                train_announcer.volume=0;
+                train_announcer.volume=0.5f;
                 train_announcer.mute=true;
                 minimap.SetActive(false);
             }            
