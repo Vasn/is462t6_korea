@@ -9,7 +9,6 @@ public class TongEquip : MonoBehaviour
 
     // for arrow guide check
     private bool firstGrab = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,22 +26,24 @@ public class TongEquip : MonoBehaviour
     {
         if (other.CompareTag("Meat")){
             if (Tong.GetComponent<TongController>().isClosed == true) {
-                // Get script called "SnapZone"
-                other.gameObject.GetComponent<CookingScript>().isColliding = false;
-                print (other.gameObject.tag);
+                if (this.transform.childCount  == 0){
+                    // Get script called "SnapZone"
+                    other.gameObject.GetComponent<CookingScript>().isColliding = false;
+                    print (other.gameObject.tag);
 
-                // disable rigidbody and collider
-                Destroy(other.gameObject.GetComponent<Rigidbody>());
-                
-                other.gameObject.GetComponent<Collider>().enabled = false;
+                    // disable rigidbody and collider
+                    Destroy(other.gameObject.GetComponent<Rigidbody>());
+                    
+                    other.gameObject.GetComponent<Collider>().enabled = false;
 
-                // make the object a child of the tong
-                other.gameObject.transform.SetParent(this.transform);
-                
-                // update arrow guide
-                if(!firstGrab){
-                    arrowGuideManager.tutorialStage=2;
-                    firstGrab = true;
+                    // make the object a child of the tong
+                    other.gameObject.transform.SetParent(this.transform);
+                    
+                    // update arrow guide
+                    if(!firstGrab){
+                        arrowGuideManager.tutorialStage=2;
+                        firstGrab = true;
+                    }
                 }
             }
         }
