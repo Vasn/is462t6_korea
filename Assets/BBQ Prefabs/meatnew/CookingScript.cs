@@ -81,7 +81,7 @@ public class CookingScript : MonoBehaviour
         audioSource.Stop();
         // if meatreadymsgprefab is instantiated as a clone, destroy it
         if(meatReadyMsg != null){
-            meatBurntMsg.SetActive(false);
+            meatReadyMsg.SetActive(false);
         }
         if(meatBurntMsg != null){
             meatBurntMsg.SetActive(false);

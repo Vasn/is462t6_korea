@@ -12,6 +12,7 @@ public class TrashBinController : MonoBehaviour
     public GameObject aura;
     public AudioClip dmgSound;
     public AudioClip correctSound;
+    public GameObject popUpText;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,9 @@ public class TrashBinController : MonoBehaviour
         {
             // THE FOLLOWING ARE CONSIDERED GENERAL WASTE
             // egg shells, crustacean shells(Crab, Lobster, Shrimp, etc), clam shells, onion and garlic paper - like skin, animal bones(beef, pork, chicken, lamb, etc), tea bags or tea leaves
-
+            
+            popUpText.GetComponent<UnityEngine.UI.Text>().text = "CORRECT!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.";
+            popUpText.GetComponent<UnityEngine.UI.Text>().color = Color.green;
             Debug.Log("CORRECT!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints += 1;
             //feedbackAudioSource.clip = correctSound;
@@ -53,6 +56,8 @@ public class TrashBinController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("General") || other.gameObject.CompareTag("Can") || other.gameObject.CompareTag("Glass") || other.gameObject.CompareTag("Paper"))
         {
+            popUpText.GetComponent<UnityEngine.UI.Text>().text = "WRONG!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.";
+            popUpText.GetComponent<UnityEngine.UI.Text>().color = Color.red;
             Debug.Log("WRONG!! You have placed '" + other.tag + "' in a '" + bin.tag + "' bin.");
             ScoreBoardController.startPoints -= 1;
             //feedbackAudioSource.clip = dmgSound;
@@ -65,6 +70,10 @@ public class TrashBinController : MonoBehaviour
             //main.startColor = Color.red;
         }
 
+        if (other.gameObject.CompareTag("Food") || other.gameObject.CompareTag("General") || other.gameObject.CompareTag("Can") || other.gameObject.CompareTag("Glass") || other.gameObject.CompareTag("Paper"))
+        {
+            other.gameObject.SetActive(false);
+        }
     }
 
     //IEnumerator ExampleCoroutine()
